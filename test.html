@@ -1,0 +1,26 @@
+<html ng-app='angular-bootstrap-slider-test'>
+	<head>
+		<title>Angular Bootstrap Slider test</title>
+		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+		<link rel="stylesheet" href="bower_components/seiyria-bootstrap-slider/dist/css/bootstrap-slider.css">
+	</head>
+	<body ng-controller="TestCtrl">
+
+		<div class="col-md-2 col-md-offset-2">
+			<slider ng-model="sliders.sliderValue" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="0" data-slider-orientation="horizontal"></slider>
+			{{sliders.sliderValue}}
+		</div>
+
+
+		<script src="bower_components/jquery/dist/jquery.js"></script>
+		<script src="bower_components/angular/angular.js"></script>
+		<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+		<script src="bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"></script>
+
+		<!-- angular-slider include -->
+		<script src="slider.js"></script>
+
+		<!-- test file include -->
+		<script src="test.js"></script>
+	</body>
+</html>
