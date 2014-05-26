@@ -7,8 +7,13 @@
 	<body ng-controller="TestCtrl">
 
 		<div class="col-md-2 col-md-offset-2">
-			<slider ng-model="sliders.sliderValue" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="0" data-slider-orientation="horizontal"></slider>
+			<slider ng-model="sliders.sliderValue" min="{{testOptions.min}}" step="{{testOptions.step}}" max="{{testOptions.max}}" value="{{testOptions.value}}"></slider>
 			{{sliders.sliderValue}}
+
+			<br><br><br><br>
+
+			<span slider ng-model="sliders.secondSliderValue" min="{{minTest}}" slider-id="{{idTest}}"></span>
+			{{sliders.secondSliderValue}}
 		</div>
 
 
