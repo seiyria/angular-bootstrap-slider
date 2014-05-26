@@ -9,7 +9,7 @@ See [bootstrap-slider](https://github.com/seiyria/bootstrap-slider) for examples
 
 Sample Usage
 ============
-```
+```html
 <!-- it can be used as an element -->
 <slider ng-model="sliders.sliderValue" min="{{testOptions.min}}" step="{{testOptions.step}}" max="{{testOptions.max}}" value="{{testOptions.value}}"></slider>
 
