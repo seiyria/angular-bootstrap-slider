@@ -14,7 +14,18 @@ angular.module('ui.bootstrap-slider', [])
 				if(attrs.step) options.step = parseFloat(attrs.step);
 				if(attrs.precision) options.precision = parseFloat(attrs.precision);
 				if(attrs.orientation) options.orientation = attrs.orientation;
-				if(attrs.value) options.value = parseFloat(attrs.value);
+				if(attrs.value) {
+					if (angular.isNumber(attrs.value) || angular.isArray(attrs.value)) {
+						options.value = attrs.value;
+					} else if (angular.isString(attrs.value)) {
+						if (attrs.value.indexOf("[") === 0) {
+							options.value = angular.fromJson(attrs.value);
+						} else {
+							options.value = parseFloat(attrs.value);
+						}
+					}
+
+				}
 				if(attrs.range) options.range = attrs.range === 'true';
 				if(attrs.selection) options.selection = attrs.selection;
 				if(attrs.tooltip) options.tooltip = attrs.tooltip;
@@ -24,6 +35,10 @@ angular.module('ui.bootstrap-slider', [])
 				if(attrs.reversed) options.reversed = attrs.reversed === 'true';
 				if(attrs.enabled) options.enabled = attrs.enabled === 'true';
 				if(attrs.naturalArrowKeys) options.natural_arrow_keys = attrs.naturalArrowKeys === 'true';
+
+				if (options.range && !options.value) {
+					options.value = [0,0]; // This is needed, because of value defined at $.fn.slider.defaults - default value 5 prevents creating range slider
+				}
 
 				var slider = $(element[0]).slider(options);
 
@@ -35,8 +50,9 @@ angular.module('ui.bootstrap-slider', [])
 				});
 
 				$scope.$watch(attrs.ngModel, function(value) {
-					if(value) 
+					if(value) {
 						slider.slider('setValue', value, false);
+					}
 				});
 			}
 		}

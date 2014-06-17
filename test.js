@@ -8,9 +8,11 @@ angular.module('angular-bootstrap-slider-test', ['ui.bootstrap-slider'])
 			min: 5,
 			max: 103,
 			step: 2.2,
-			value: 7
-		}
+			value: 7,
+			rangeValue : [2,20]
+		};
 
 		$scope.sliders.secondSliderValue = 0;
+		$scope.sliders.rangeSliderValue = [ 10, 50 ];
 
 	}]);
