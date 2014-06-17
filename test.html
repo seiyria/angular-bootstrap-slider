@@ -14,6 +14,15 @@
 
 			<span slider ng-model="sliders.secondSliderValue" min="{{minTest}}" slider-id="{{idTest}}"></span>
 			{{sliders.secondSliderValue}}
+
+            <br><br><br><br>
+
+            <span slider ng-model="sliders.rangeSliderValue" min="{{testOptions.min}}" max="{{testOptions.max}}" range="true" slider-id="rangeSlider1"></span>
+         	{{sliders.rangeSliderValue}}
+
+            <br><br><br><br>
+            <span  ng-model="sliders.rangeSliderValue2" slider  min="{{testOptions.min}}" max="{{testOptions.max}}" range="true" value="[55,70]" slider-id="rangeSlider2"></span>
+         	{{sliders.rangeSliderValue2}}
 		</div>
 
 
