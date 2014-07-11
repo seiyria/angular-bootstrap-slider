@@ -41,8 +41,9 @@ angular.module('ui.bootstrap-slider', [])
 				}
 
 				var slider = $(element[0]).slider(options);
+        var updateEvent = attrs.updateEvent || 'slide';
 
-				slider.on('slide', function(ev) {
+				slider.on(updateEvent, function(ev) {
 					model.assign($scope, ev.value);
 					$timeout(function() {
 						$scope.$apply();
