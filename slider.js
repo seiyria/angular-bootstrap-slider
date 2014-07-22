@@ -7,6 +7,22 @@ angular.module('ui.bootstrap-slider', [])
 			link: function ($scope, element, attrs) {
 				var model = $parse(attrs.ngModel);
 
+				$.fn.slider.Constructor.prototype.disable = function () {
+					this.picker.off();
+				}
+				$.fn.slider.Constructor.prototype.enable = function () {
+					if (this.touchCapable) {
+						// Touch: Bind touch events:
+						this.picker.on({
+							touchstart: $.proxy(this.mousedown, this)
+						});
+					} else {
+						this.picker.on({
+							mousedown: $.proxy(this.mousedown, this)
+						});
+					}
+				}
+
 				var options = {};
 				if(attrs.sliderId) options.id = attrs.sliderId;
 				if(attrs.min) options.min = parseFloat(attrs.min);
@@ -53,6 +69,14 @@ angular.module('ui.bootstrap-slider', [])
 				$scope.$watch(attrs.ngModel, function(value) {
 					if(value) {
 						slider.slider('setValue', value, false);
+					}
+				});
+
+				$scope.$watch(attrs.ngDisabled, function (value) {
+					if (value) {
+						slider.slider('disable');
+					} else {
+						slider.slider('enable');
 					}
 				});
 			}
