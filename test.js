@@ -14,5 +14,10 @@ angular.module('angular-bootstrap-slider-test', ['ui.bootstrap-slider'])
 
 		$scope.sliders.secondSliderValue = 0;
 		$scope.sliders.rangeSliderValue = [ 10, 50 ];
+        
+        $scope.sliders.thirdSliderValue = 0;
+        $scope.myFormater = function(value) {
+            return value + "%";
+        }
 
 	}]);
