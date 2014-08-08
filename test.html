@@ -23,6 +23,10 @@
             <br><br><br><br>
             <span  ng-model="sliders.rangeSliderValue2" slider  min="{{testOptions.min}}" max="{{testOptions.max}}" range="true" value="[55,70]" slider-id="rangeSlider2"></span>
          	{{sliders.rangeSliderValue2}}
+            
+            <br><br><br><br>
+            <slider ng-model="sliders.thirdSliderValue" formater="myFormater"></slider>
+         	{{sliders.thirdSliderValue}}
 		</div>
 
 
