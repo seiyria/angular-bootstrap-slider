@@ -66,11 +66,10 @@ angular.module('ui.bootstrap-slider', [])
 					});
 				});
 
-				ngModelCtrl.$viewChangeListeners.push(function() {
-					var value = ngModelCtrl.$viewValue;
-					if (value) {
+				$scope.$watch(attrs.ngModel, function(value) {
+					if(value) {
 						slider.slider('setValue', value, false);
-					};
+					}
 				});
 
 				$scope.$watch(attrs.ngDisabled, function (value) {
