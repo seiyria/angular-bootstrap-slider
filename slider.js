@@ -4,9 +4,8 @@ angular.module('ui.bootstrap-slider', [])
 			restrict: 'AE',
 			replace: true,
 			template: '<input type="text" />',
-			link: function ($scope, element, attrs) {
-				var model = $parse(attrs.ngModel);
-
+			require: 'ngModel',
+			link: function ($scope, element, attrs, ngModelCtrl) {
 				$.fn.slider.Constructor.prototype.disable = function () {
 					this.picker.off();
 				}
@@ -58,19 +57,20 @@ angular.module('ui.bootstrap-slider', [])
 				}
 
 				var slider = $(element[0]).slider(options);
-        var updateEvent = attrs.updateEvent || 'slide';
+				var updateEvent = attrs.updateEvent || 'slide';
 
 				slider.on(updateEvent, function(ev) {
-					model.assign($scope, ev.value);
+					ngModelCtrl.$setViewValue(ev.value);
 					$timeout(function() {
 						$scope.$apply();
 					});
 				});
 
-				$scope.$watch(attrs.ngModel, function(value) {
-					if(value || value === 0) {
+				ngModelCtrl.$viewChangeListeners.push(function() {
+					var value = ngModelCtrl.$viewValue;
+					if (value) {
 						slider.slider('setValue', value, false);
-					}
+					};
 				});
 
 				$scope.$watch(attrs.ngDisabled, function (value) {
