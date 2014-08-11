@@ -67,7 +67,7 @@ angular.module('ui.bootstrap-slider', [])
 				});
 
 				$scope.$watch(attrs.ngModel, function(value) {
-					if(value) {
+					if(value || value === 0) {
 						slider.slider('setValue', value, false);
 					}
 				});
