@@ -72,13 +72,15 @@ angular.module('ui.bootstrap-slider', [])
 					}
 				});
 
-				$scope.$watch(attrs.ngDisabled, function (value) {
-					if (value) {
-						slider.slider('disable');
-					} else {
-						slider.slider('enable');
-					}
-				});
+				if (angular.isDefined(attrs.ngDisabled)) {
+					$scope.$watch(attrs.ngDisabled, function(value) {
+						if (value) {
+							slider.slider('disable');
+						} else {
+							slider.slider('enable');
+						}
+					});
+				}
 			}
 		};
 	}])
