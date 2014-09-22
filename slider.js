@@ -8,12 +8,19 @@ angular.module('ui.bootstrap-slider', [])
 			link: function ($scope, element, attrs, ngModelCtrl) {
 				$.fn.slider.Constructor.prototype.disable = function () {
 					this.picker.off();
-				}
+				};
+
 				$.fn.slider.Constructor.prototype.enable = function () {
 					this.picker.on();
-				}
+				};
 
-				var options = {};
+                                if (attrs.ngChange) {
+                                        ngModelCtrl.$viewChangeListeners.push(function() {
+                                                    $scope.$eval(attrs.ngChange);
+                                        });
+                                }
+
+                                var options = {};
 				if(attrs.sliderId) options.id = attrs.sliderId;
 				if(attrs.min) options.min = parseFloat(attrs.min);
 				if(attrs.max) options.max = parseFloat(attrs.max);
