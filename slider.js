@@ -16,7 +16,7 @@ angular.module('ui.bootstrap-slider', [])
 
                                 if (attrs.ngChange) {
                                         ngModelCtrl.$viewChangeListeners.push(function() {
-                                                    $scope.$eval(attrs.ngChange);
+                                                    $scope.$apply(attrs.ngChange);
                                         });
                                 }
 
