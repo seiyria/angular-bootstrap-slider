@@ -21,7 +21,7 @@ angular.module('ui.bootstrap-slider', [])
                                 }
 
                                 var options = {};
-				if(attrs.sliderId) options.id = attrs.sliderId;
+				if(attrs.sliderid) options.id = attrs.sliderid;
 				if(attrs.min) options.min = parseFloat(attrs.min);
 				if(attrs.max) options.max = parseFloat(attrs.max);
 				if(attrs.step) options.step = parseFloat(attrs.step);
@@ -42,12 +42,12 @@ angular.module('ui.bootstrap-slider', [])
 				if(attrs.range) options.range = attrs.range === 'true';
 				if(attrs.selection) options.selection = attrs.selection;
 				if(attrs.tooltip) options.tooltip = attrs.tooltip;
-				if(attrs.tooltipSeparator) options.tooltip_separator = attrs.tooltipSeparator;
-				if(attrs.tooltipSplit) options.tooltip_split = attrs.tooltipSplit === 'true';
+				if(attrs.tooltipseparator) options.tooltip_separator = attrs.tooltipseparator;
+				if(attrs.tooltipsplit) options.tooltip_split = attrs.tooltipsplit === 'true';
 				if(attrs.handle) options.handle = attrs.handle;
 				if(attrs.reversed) options.reversed = attrs.reversed === 'true';
 				if(attrs.enabled) options.enabled = attrs.enabled === 'true';
-				if(attrs.naturalArrowKeys) options.natural_arrow_keys = attrs.naturalArrowKeys === 'true';
+				if(attrs.naturalarrowkeys) options.natural_arrow_keys = attrs.naturalarrowkeys === 'true';
                 if(attrs.formater) options.formater = $scope.$eval(attrs.formater);
 
 				if (options.range && !options.value) {
