@@ -55,7 +55,7 @@ angular.module('ui.bootstrap-slider', [])
 				}
 
 				var slider = $(element[0]).slider(options);
-				var updateEvent = attrs.updateEvent || 'slide';
+				var updateEvent = attrs.updateevent || 'slide';
 
 				slider.on(updateEvent, function(ev) {
 					ngModelCtrl.$setViewValue(ev.value);
