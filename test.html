@@ -27,6 +27,11 @@
             <br><br><br><br>
             <slider ng-model="sliders.thirdSliderValue" formater="myFormater"></slider>
          	{{sliders.thirdSliderValue}}
+
+            <br><br><br><br>
+            <span slider ng-model="sliders.fourthSliderValue" on-start-slide="status='started'" on-slide="status='sliding'" on-stop-slide="status='stopped'"></span>
+            {{sliders.thirdSliderValue}}
+            status: {{status}}
 		</div>
 
 

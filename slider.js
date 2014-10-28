@@ -64,6 +64,26 @@ angular.module('ui.bootstrap-slider', [])
 					});
 				});
 
+				// Event listeners
+				var sliderEvents = {
+					slideStart: 'onStartSlide',
+					slide: 'onSlide',
+					slideStop: 'onStopSlide'
+				};
+
+				angular.forEach(sliderEvents, function(sliderEventAttr, sliderEvent) {
+					slider.on(sliderEvent, function(ev) {
+
+						if (attrs[sliderEventAttr]) {
+							$scope.$eval(attrs[sliderEventAttr]);
+
+							$timeout(function() {
+								$scope.$apply();
+							});
+						}
+					});
+				});
+
 				$scope.$watch(attrs.ngModel, function(value) {
 					if (value || value === 0) {
 						slider.slider('setValue', value, false);
