@@ -6,14 +6,6 @@ angular.module('ui.bootstrap-slider', [])
 			template: '<input type="text" />',
 			require: 'ngModel',
 			link: function($scope, element, attrs, ngModelCtrl) {
-				$.fn.slider.constructor.prototype.disable = function() {
-					this.picker.off();
-				};
-
-				$.fn.slider.constructor.prototype.enable = function() {
-					this.picker.on();
-				};
-
 				if (attrs.ngChange) {
 					ngModelCtrl.$viewChangeListeners.push(function() {
 						$scope.$apply(attrs.ngChange);
@@ -54,7 +46,15 @@ angular.module('ui.bootstrap-slider', [])
 					options.value = [0, 0]; // This is needed, because of value defined at $.fn.slider.defaults - default value 5 prevents creating range slider
 				}
 
-				var slider = $(element[0]).slider(options);
+				var slider = element.slider(options);
+				/* Disable picker when slider is disabled */
+				slider.disable = function() {
+					this.picker.off();
+				};
+				slider.enable = function() {
+					this.picker.on();
+				};
+
 				var updateEvent = attrs.updateevent || 'slide';
 
 				slider.on(updateEvent, function(ev) {
