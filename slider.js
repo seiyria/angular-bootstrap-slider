@@ -40,7 +40,7 @@ angular.module('ui.bootstrap-slider', [])
 				if (attrs.reversed) options.reversed = attrs.reversed === 'true';
 				if (attrs.enabled) options.enabled = attrs.enabled === 'true';
 				if (attrs.naturalarrowkeys) options.natural_arrow_keys = attrs.naturalarrowkeys === 'true';
-				if (attrs.formater) options.formater = $scope.$eval(attrs.formater);
+				if (attrs.formatter) options.formatter = $scope.$eval(attrs.formatter);
 
 				if (options.range && !options.value) {
 					options.value = [0, 0]; // This is needed, because of value defined at $.fn.slider.defaults - default value 5 prevents creating range slider
