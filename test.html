@@ -7,32 +7,49 @@
 	<body ng-controller="TestCtrl">
 
 		<div class="col-md-2 col-md-offset-2">
-			<slider ng-model="sliders.sliderValue" min="{{testOptions.min}}" step="{{testOptions.step}}" max="{{testOptions.max}}" value="{{testOptions.value}}"></slider>
+
+            Slider Value: <input type="number" ng-model="sliders.sliderValue" class="form-control">
+
+            Max. Value: <input type="number" ng-model="testOptions.max" class="form-control">
+            Min. Value: <input type="number" ng-model="testOptions.min" class="form-control">
+
+			<slider ng-model="sliders.sliderValue" min="testOptions.min" step="testOptions.step" max="testOptions.max"></slider>
 			{{sliders.sliderValue}}
 
 			<br><br><br><br>
 
-			<span slider ng-model="sliders.secondSliderValue" min="{{minTest}}" slider-id="{{idTest}}"></span>
+			<span slider ng-model="sliders.secondSliderValue" min="minTest" slider-id="idTest"></span>
 			{{sliders.secondSliderValue}}
 
             <br><br><br><br>
 
-            <span slider ng-model="sliders.rangeSliderValue" min="{{testOptions.min}}" max="{{testOptions.max}}" range="true" slider-id="rangeSlider1"></span>
-         	{{sliders.rangeSliderValue}}
 
             <br><br><br><br>
-            <span  ng-model="sliders.rangeSliderValue2" slider  min="{{testOptions.min}}" max="{{testOptions.max}}" range="true" value="[55,70]" slider-id="rangeSlider2"></span>
+
+            <span slider ng-model="sliders.rangeSliderValue" min="testOptions.min" max="testOptions.max" range="range" slider-id="rangeSlider1"></span>
+         	{{sliders.rangeSliderValue}}
+
+
+            <br><br><br><br>
+            <span  ng-model="sliders.rangeSliderValue2" slider  min="testOptions.min" max="testOptions.max" range="range" value="value" slider-id="rangeSlider2"></span>
          	{{sliders.rangeSliderValue2}}
-            
+
+
+
             <br><br><br><br>
             <slider ng-model="sliders.thirdSliderValue" formater="myFormater"></slider>
          	{{sliders.thirdSliderValue}}
 
             <br><br><br><br>
             <span slider ng-model="sliders.fourthSliderValue" on-start-slide="status='started'" on-slide="status='sliding'" on-stop-slide="status='stopped'"></span>
-            {{sliders.thirdSliderValue}}
+            {{sliders.fourthSliderValue}}
             status: {{status}}
-		</div>
+
+            <span slider ng-model="sliders.fourthSliderValue" on-start-slide="status='started'" on-slide="slideDelegate(value)" on-stop-slide="status='stopped'"></span>
+            {{sliders.fourthSliderValue}}
+            status: {{status}}
+
+        </div>
 
 
 		<script src="bower_components/jquery/dist/jquery.js"></script>

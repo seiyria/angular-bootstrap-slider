@@ -11,8 +11,8 @@ Sample Usage
 ============
 ```html
 <!-- it can be used as an element -->
-<slider ng-model="sliders.sliderValue" min="{{testOptions.min}}" step="{{testOptions.step}}" max="{{testOptions.max}}" value="{{testOptions.value}}"></slider>
+<slider ng-model="sliders.sliderValue" min="testOptions.min" step="testOptions.step" max="testOptions.max" value="testOptions.value"></slider>
 
 <!-- ..or an attribute -->
-<span slider ng-model="sliders.secondSliderValue" min="{{minTest}}" slider-id="{{idTest}}"></span>
+<span slider ng-model="sliders.secondSliderValue" min="minTest"></span>
 ```
