@@ -3,7 +3,7 @@ angular.module('ui.bootstrap-slider', [])
         return {
             restrict: 'AE',
             replace: true,
-            template: '<input type="text" />',
+            template: '<div><input class="slider-input" type="text" /></div>',
             require: 'ngModel',
             scope: {
                 max: "=",
@@ -83,9 +83,9 @@ angular.module('ui.bootstrap-slider', [])
                         options.value = [0, 0]; // This is needed, because of value defined at $.fn.slider.defaults - default value 5 prevents creating range slider
                     }
 
-                    var slider = $(element[0]).slider(options);
+                    var slider = $(element.find(".slider-input")[0]).slider(options);
                     slider.slider('destroy');
-                    var slider = $(element[0]).slider(options);
+                    var slider = $(element.find(".slider-input")[0]).slider(options);
 
                     var updateEvent = attrs.updateevent || 'slide';
 
