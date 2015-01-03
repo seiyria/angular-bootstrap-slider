@@ -85,19 +85,35 @@ angular.module('ui.bootstrap-slider', [])
 
                     var slider = $(element.find(".slider-input")[0]).slider(options);
                     slider.slider('destroy');
-                    var slider = $(element.find(".slider-input")[0]).slider(options);
+                    slider = $(element.find(".slider-input")[0]).slider(options);
 
-                    var updateEvent = attrs.updateevent || 'slide';
-
-                    slider.on(updateEvent, function (ev) {
-                        ngModelCtrl.$setViewValue(ev.value);
-                        $timeout(function () {
-                            $scope.$apply();
-                        });
-
-                        if(typeof ev != undefined && typeof ev.value != undefined) {
-                            $scope.onSlide({'value': ev.value});
+                    var updateEvent;
+                    if (angular.isString(attrs.updateevent)) {
+                        // check if array of event names
+                        if (attrs.updateevent.indexOf("[") === 0) {
+                            updateEvent = angular.fromJson(attrs.updateevent);
                         }
+                        else {
+                            // if only single event name in string
+                            updateEvent = [attrs.updateevent];
+                        }
+                    }
+                    else {
+                        // default to slide event
+                        updateEvent = ['slide'];
+                    }
+
+                    angular.forEach(updateEvent, function(sliderEvent) {
+                        slider.on(sliderEvent, function(ev) {
+                            ngModelCtrl.$setViewValue(ev.value);
+                            $timeout(function() {
+                                $scope.$apply();
+                            });
+
+                            if(typeof ev === 'object' && ev.value) {
+                                $scope.onSlide({'value': ev.value});
+                            }
+                        });
                     });
 
                     // Event listeners
