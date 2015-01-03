@@ -87,12 +87,28 @@ angular.module('ui.bootstrap-slider', [])
                     slider.slider('destroy');
                     slider = $(element.find(".slider-input")[0]).slider(options);
 
-                    var updateEvent = attrs.updateevent || 'slide';
+                    var updateEvent;
+                    if (angular.isString(attrs.updateevent)) {
+                        // check if array of event names
+                        if (attrs.updateevent.indexOf("[") === 0) {
+                            updateEvent = angular.fromJson(attrs.updateevent);
+                        }
+                        else {
+                            // if only single event name in string
+                            updateEvent = [attrs.updateevent];
+                        }
+                    }
+                    else {
+                        // default to slide event
+                        updateEvent = ['slide'];
+                    }
 
-                    slider.on(updateEvent, function (ev) {
-                        ngModelCtrl.$setViewValue(ev.value);
-                        $timeout(function () {
-                            $scope.$apply();
+                    angular.forEach(updateEvent, function(sliderEvent) {
+                        slider.on(sliderEvent, function(ev) {
+                            ngModelCtrl.$setViewValue(ev.value);
+                            $timeout(function() {
+                                $scope.$apply();
+                            });
                         });
                     });
 
@@ -108,7 +124,6 @@ angular.module('ui.bootstrap-slider', [])
 
                             if ($scope[sliderEventAttr]) {
                                 var invoker = $parse(attrs[sliderEventAttr]);
-                                //var invoker = $parse(attrs[sliderEventAttr]);
                                 invoker($scope.$parent, { $event: ev, value: ev.value });
 
                                 $timeout(function() {

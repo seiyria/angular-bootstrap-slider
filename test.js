@@ -6,7 +6,7 @@ angular.module( 'angular-bootstrap-slider-test', ['ui.bootstrap-slider'] )
 			$scope.sliders.secondSliderValue = 0;
 			$scope.sliders.thirdSliderValue = 0;
 			$scope.sliders.fourthSliderValue = 0;
-			$scope.sliders.fifthSliderValue = 0;
+			$scope.sliders.fithSliderValue = 0;
 			$scope.sliders.sixthSliderValue = 0;
 			$scope.sliders.seventhSliderValue = 0;
 			$scope.sliders.eighthSliderValue = 0;
@@ -26,19 +26,17 @@ angular.module( 'angular-bootstrap-slider-test', ['ui.bootstrap-slider'] )
 			$scope.sliders.rangeSliderValue = [10, 50];
 			$scope.sliders.rangeSliderValue2 = [10, 50];
 
-
 			$scope.$watch( 'sliders.rangeSliderValue2', function ( value ) {
 				$log.log( 'sliders value has changed: ' + value );
-				$log.log( value );
 			} );
 
-			$scope.myFormater = function ( value ) {
-				return value + "%";
-			};
+      $scope.myFormater = function ( value ) {
+        return value + "%";
+      };
 
-			$scope.delegateEvent = null;
-			$scope.slideDelegate = function ( value, $event ) {
-				$log.log( 'slide value: ' + value );
-				$scope.delegateEvent = $event;
-			};
-		}] );
+      $scope.delegateEvent = null;
+      $scope.slideDelegate = function ( value, $event ) {
+        $log.log( 'slide value: ' + value );
+        $scope.delegateEvent = $event;
+      };
+	}]);
