@@ -107,17 +107,13 @@ angular.module('ui.bootstrap-slider', [])
                         slider.on(sliderEvent, function(ev) {
 
                             if ($scope[sliderEventAttr]) {
-                                if( typeof ev === 'object' && ev.value ) {
-                                    $scope.$eval(attrs[sliderEventAttr], { $event: ev, value: ev.value });
-                                }
-                                else {
-                                    $scope.$eval($scope[sliderEventAttr]);
-                                }
+                                var invoker = $parse(attrs[sliderEventAttr]);
+                                //var invoker = $parse(attrs[sliderEventAttr]);
+                                invoker($scope.$parent, { $event: ev, value: ev.value });
 
                                 $timeout(function() {
                                     $scope.$apply();
                                 });
-
                             }
                         });
                     });
