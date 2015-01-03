@@ -1,66 +1,90 @@
 <html ng-app='angular-bootstrap-slider-test'>
-	<head>
-		<title>Angular Bootstrap Slider test</title>
-		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
-		<link rel="stylesheet" href="bower_components/seiyria-bootstrap-slider/dist/css/bootstrap-slider.css">
-	</head>
-	<body ng-controller="TestCtrl">
+<head>
+	<title>Angular Bootstrap Slider test</title>
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" href="bower_components/seiyria-bootstrap-slider/dist/css/bootstrap-slider.css">
+</head>
+<body ng-controller="TestCtrl">
 
-		<div class="col-md-2 col-md-offset-2">
+<div class="col-md-2 col-md-offset-2">
 
-            Slider Value: <input type="number" ng-model="sliders.sliderValue" class="form-control">
+	Slider Value: <input type="number" ng-model="sliders.sliderValue" class="form-control">
 
-            Max. Value: <input type="number" ng-model="testOptions.max" class="form-control">
-            Min. Value: <input type="number" ng-model="testOptions.min" class="form-control">
+	Max. Value: <input type="number" ng-model="testOptions.max" class="form-control">
+	Min. Value: <input type="number" ng-model="testOptions.min" class="form-control">
 
-			<slider ng-model="sliders.sliderValue" min="testOptions.min" step="testOptions.step" max="testOptions.max"></slider>
-			{{sliders.sliderValue}}
+	<slider ng-model="sliders.sliderValue" min="testOptions.min" step="testOptions.step" max="testOptions.max"></slider>
+	Value: {{sliders.sliderValue}}
 
-			<br><br><br><br>
+	<br><br><br><br>
 
-			<span slider ng-model="sliders.secondSliderValue" min="minTest" slider-id="idTest"></span>
-			{{sliders.secondSliderValue}}
+	<span slider ng-model="sliders.secondSliderValue" min="minTest" slider-id="idTest"></span>
+	Value: {{sliders.secondSliderValue}}
 
-            <br><br><br><br>
+	<br><br><br><br>
+
+	<span slider ng-model="sliders.rangeSliderValue" min="testOptions.min" max="testOptions.max" range="range"
+	      slider-id="rangeSlider1"></span>
+	Value: {{sliders.rangeSliderValue}}
+
+	<br><br><br><br>
+
+	<span ng-model="sliders.rangeSliderValue2" slider min="testOptions.min" max="testOptions.max" range="range"
+	      value="value" slider-id="rangeSlider2"></span>
+	Value: {{sliders.rangeSliderValue2}}
+
+	<br><br><br><br>
+
+	<slider ng-model="sliders.thirdSliderValue" formater="myFormater"></slider>
+	Value: {{sliders.thirdSliderValue}}
+
+	<br><br><br><br>
+
+	<span slider ng-model="sliders.fourthSliderValue" on-start-slide="status='started'" on-slide="status='sliding'"
+	      on-stop-slide="status='stopped'"></span>
+	Value: {{sliders.fourthSliderValue}}
+	Status: {{status}}
+
+	<span slider ng-model="sliders.fourthSliderValue" on-start-slide="status='started'" on-slide="slideDelegate(value)"
+	      on-stop-slide="status='stopped'"></span>
+	Value: {{sliders.fourthSliderValue}}
+	Status: {{status}}
+
+	<br><br><br><br>
+
+	Updates model on slide event by default
+	<span slider ng-model="sliders.sixthSliderValue"></span>
+	Value: {{sliders.sixthSliderValue}}
+
+	<br><br>
+
+	Updates model only on slideStop event
+	<span slider ng-model="sliders.seventhSliderValue" updateevent="slideStop"></span>
+	Value: {{sliders.seventhSliderValue}}
+
+	<br><br>
+
+	Updates model on slideStart and slideStop
+	<span slider ng-model="sliders.eighthSliderValue" updateevent='["slideStart","slideStop"]'></span>
+	Value: {{sliders.eighthSliderValue}}
+
+	<br><br>
+
+	Updates model on all events
+	<span slider ng-model="sliders.ninthSliderValue" updateevent="[&quot;slideStop&quot;, &quot;slide&quot;, &quot;slideStart&quot;]"></span>
+	Value: {{sliders.ninthSliderValue}}
+</div>
 
 
-            <br><br><br><br>
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"></script>
 
-            <span slider ng-model="sliders.rangeSliderValue" min="testOptions.min" max="testOptions.max" range="range" slider-id="rangeSlider1"></span>
-         	{{sliders.rangeSliderValue}}
+<!-- angular-slider include -->
+<script src="slider.js"></script>
 
-
-            <br><br><br><br>
-            <span  ng-model="sliders.rangeSliderValue2" slider  min="testOptions.min" max="testOptions.max" range="range" value="value" slider-id="rangeSlider2"></span>
-         	{{sliders.rangeSliderValue2}}
-
-
-
-            <br><br><br><br>
-            <slider ng-model="sliders.thirdSliderValue" formater="myFormater"></slider>
-         	{{sliders.thirdSliderValue}}
-
-            <br><br><br><br>
-            <span slider ng-model="sliders.fourthSliderValue" on-start-slide="status='started'" on-slide="status='sliding'" on-stop-slide="status='stopped'"></span>
-            {{sliders.fourthSliderValue}}
-            status: {{status}}
-
-            <span slider ng-model="sliders.fourthSliderValue" on-start-slide="status='started'" on-slide="slideDelegate(value)" on-stop-slide="status='stopped'"></span>
-            {{sliders.fourthSliderValue}}
-            status: {{status}}
-
-        </div>
-
-
-		<script src="bower_components/jquery/dist/jquery.js"></script>
-		<script src="bower_components/angular/angular.js"></script>
-		<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-		<script src="bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"></script>
-
-		<!-- angular-slider include -->
-		<script src="slider.js"></script>
-
-		<!-- test file include -->
-		<script src="test.js"></script>
-	</body>
+<!-- test file include -->
+<script src="test.js"></script>
+</body>
 </html>
