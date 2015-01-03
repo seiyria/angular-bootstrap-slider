@@ -85,7 +85,7 @@ angular.module('ui.bootstrap-slider', [])
 
                     var slider = $(element.find(".slider-input")[0]).slider(options);
                     slider.slider('destroy');
-                    var slider = $(element.find(".slider-input")[0]).slider(options);
+                    slider = $(element.find(".slider-input")[0]).slider(options);
 
                     var updateEvent = attrs.updateevent || 'slide';
 
@@ -94,15 +94,12 @@ angular.module('ui.bootstrap-slider', [])
                         $timeout(function () {
                             $scope.$apply();
                         });
-
-                        if(typeof ev != undefined && typeof ev.value != undefined) {
-                            $scope.onSlide({'value': ev.value});
-                        }
                     });
 
                     // Event listeners
                     var sliderEvents = {
                         slideStart: 'onStartSlide',
+                        slide: 'onSlide',
                         slideStop: 'onStopSlide'
                     };
 
@@ -110,7 +107,9 @@ angular.module('ui.bootstrap-slider', [])
                         slider.on(sliderEvent, function(ev) {
 
                             if ($scope[sliderEventAttr]) {
-                                $scope.$eval($scope[sliderEventAttr]);
+                                var invoker = $parse(attrs[sliderEventAttr]);
+                                //var invoker = $parse(attrs[sliderEventAttr]);
+                                invoker($scope.$parent, { $event: ev, value: ev.value });
 
                                 $timeout(function() {
                                     $scope.$apply();
