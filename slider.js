@@ -12,158 +12,183 @@ angular.module('ui.bootstrap-slider', [])
                 value: "=",
                 ngModel: '=',
                 range:'=',
-                sliderid:'=',
-                formater:'&',
+                sliderid: '=',
+                formater: '&',
                 onStartSlide: '&',
                 onStopSlide: '&',
                 onSlide: '&'
             },
             link: function ($scope, element, attrs, ngModelCtrl, $compile) {
+                var ngModelDeregisterFn, ngDisabledDeregisterFn;
+
                 initSlider();
 
                 function initSlider() {
-
-                    if (attrs.ngChange) {
-                        ngModelCtrl.$viewChangeListeners.push(function () {
-                            $scope.$apply(attrs.ngChange);
-                        });
-                    }
-
-                    $.fn.slider.Constructor.prototype.disable = function () {
-                        this.picker.off();
-                    };
-
-                    $.fn.slider.Constructor.prototype.enable = function () {
-                        this.picker.on();
-                    };
-
-                    if (attrs.ngChange) {
-                        ngModelCtrl.$viewChangeListeners.push(function () {
-                            $scope.$apply(attrs.ngChange);
-                        });
-                    }
-
                     var options = {};
-                    if ($scope.sliderid) options.id = $scope.sliderid;
-                    if ($scope.min) options.min = parseFloat($scope.min);
-                    if ($scope.max) {
-                        options.max = parseFloat($scope.max);
+
+                    function setOption(key, value, defaultValue) {
+                        options[key] = value || defaultValue;
+                    }
+                    function setFloatOption(key, value, defaultValue) {
+                        options[key] = value ? parseFloat(value) : defaultValue;
+                    }
+                    function setBooleanOption(key, value, defaultValue) {
+                        options[key] = value ? value + '' === 'true' : defaultValue;
+                    }
+                    function getArrayOrValue(value) {
+                        return (angular.isString(value) && value.indexOf("[") === 0) ? angular.fromJson(value) : value;
                     }
 
+                    setOption('id', $scope.sliderid);
+                    setOption('orientation', attrs.orientation, 'horizontal');
+                    setOption('selection', attrs.selection, 'before');
+                    setOption('handle', attrs.handle, 'round');
+                    setOption('tooltip', attrs.tooltip, 'show');
+                    setOption('tooltipseparator', attrs.tooltipseparator, ':');
 
-                    if (attrs.step) options.step = parseFloat($scope.step);
-                    if (attrs.precision) options.precision = parseFloat(attrs.precision);
-                    if (attrs.orientation) options.orientation = attrs.orientation;
+                    setFloatOption('min', $scope.min, 0);
+                    setFloatOption('max', $scope.max, 10);
+                    setFloatOption('step', $scope.step, 1);
+                    var strNbr = options.step + '';
+                    var decimals = strNbr.substring(strNbr.lastIndexOf('.') + 1);
+                    setFloatOption('precision', attrs.precision, decimals);
+
+                    setBooleanOption('tooltip_split', attrs.tooltipsplit, false);
+                    setBooleanOption('enabled', attrs.enabled, true);
+                    setBooleanOption('naturalarrowkeys', attrs.naturalarrowkeys, false);
+                    setBooleanOption('reversed', attrs.reversed, false);
+
                     if ($scope.value) {
                         if (angular.isNumber($scope.value) || angular.isArray($scope.value)) {
                             options.value = $scope.value;
-                        } else if (angular.isString($scope.value)) {
-                            if (attrs.value.indexOf("[") === 0) {
-                                options.value = angular.fromJson($scope.value);
-                            } else {
+                        }
+                        else if (angular.isString($scope.value)) {
+                            options.value = getArrayOrValue($scope.value);
+                            if(!angular.isArray(options.value)) {
                                 options.value = parseFloat($scope.value);
                             }
                         }
                     }
-                    if ($scope.range) {
-                        options.range = $scope.range === true;
-                    }
 
-                    if (attrs.selection) options.selection = attrs.selection;
-                    if (attrs.tooltip) options.tooltip = attrs.tooltip;
-                    if (attrs.tooltipseparator) options.tooltip_separator = attrs.tooltipseparator;
-                    if (attrs.tooltipsplit) options.tooltip_split = attrs.tooltipsplit === 'true';
-                    if (attrs.handle) options.handle = attrs.handle;
-                    if (attrs.reversed) options.reversed = attrs.reversed === 'true';
-                    if (attrs.enabled) options.enabled = attrs.enabled === 'true';
-                    if (attrs.naturalarrowkeys) options.natural_arrow_keys = attrs.naturalarrowkeys === 'true';
-                    if (attrs.formater) options.formater = $scope.$eval($scope.formater);
-
-                    if (options.range && !options.value) {
-                        options.value = [0, 0]; // This is needed, because of value defined at $.fn.slider.defaults - default value 5 prevents creating range slider
-                    }
-
-                    var slider = $(element.find(".slider-input")[0]).slider(options);
-                    slider.slider('destroy');
-                    slider = $(element.find(".slider-input")[0]).slider(options);
-
-                    var updateEvent;
-                    if (angular.isString(attrs.updateevent)) {
-                        // check if array of event names
-                        if (attrs.updateevent.indexOf("[") === 0) {
-                            updateEvent = angular.fromJson(attrs.updateevent);
+                    setBooleanOption('range', $scope.range, false);
+                    if( options.range ) {
+                        if( angular.isArray($scope.value) ) {
+                            options.value = $scope.value;
+                        }
+                        else if (angular.isString($scope.value)) {
+                            options.value = getArrayOrValue($scope.value);
+                            if(!angular.isArray(options.value)) {
+                                var value = parseFloat($scope.value);
+                                if( value < $scope.min ) {
+                                    value = $scope.min;
+                                    options.value = [value, options.max];
+                                }
+                                else if( value > $scope.max ) {
+                                    value = $scope.max;
+                                    options.value = [options.min, value];
+                                }
+                            }
                         }
                         else {
-                            // if only single event name in string
-                            updateEvent = [attrs.updateevent];
+                            options.value = [options.min, options.max]; // This is needed, because of value defined at $.fn.slider.defaults - default value 5 prevents creating range slider
                         }
+                        $scope.ngModel = options.value; // needed, otherwise turns value into [null, ##]
                     }
                     else {
-                        // default to slide event
-                        updateEvent = ['slide'];
+                        setFloatOption('value', $scope.value, 5);
                     }
 
-                    angular.forEach(updateEvent, function(sliderEvent) {
-                        slider.on(sliderEvent, function(ev) {
-                            ngModelCtrl.$setViewValue(ev.value);
-                            $timeout(function() {
-                                $scope.$apply();
-                            });
-                        });
-                    });
+                    if ($scope.formater) options.formater = $scope.$eval($scope.formater);
 
-                    // Event listeners
-                    var sliderEvents = {
-                        slideStart: 'onStartSlide',
-                        slide: 'onSlide',
-                        slideStop: 'onStopSlide'
-                    };
+                    var slider = element.find( ".slider-input" ).eq( 0 );
+                    // check if slider jQuery plugin exists
+                    if( $.fn.slider ) {
+                        // adding methods to jQuery slider plugin prototype
+                        $.fn.slider.Constructor.prototype.disable = function () {
+                            this.picker.off();
+                        };
+                        $.fn.slider.Constructor.prototype.enable = function () {
+                            this.picker.on();
+                        };
 
-                    angular.forEach(sliderEvents, function(sliderEventAttr, sliderEvent) {
-                        slider.on(sliderEvent, function(ev) {
+                        // destroy previous slider to reset all options
+                        slider.slider( options );
+                        slider.slider( 'destroy' );
+                        slider.slider( options );
 
-                            if ($scope[sliderEventAttr]) {
-                                var invoker = $parse(attrs[sliderEventAttr]);
-                                invoker($scope.$parent, { $event: ev, value: ev.value });
-
-                                $timeout(function() {
+                        // everything that needs slider element
+                        var updateEvent = getArrayOrValue( attrs.updateevent );
+                        if ( angular.isString( updateEvent ) ) {
+                            // if only single event name in string
+                            updateEvent = [updateEvent];
+                        }
+                        else {
+                            // default to slide event
+                            updateEvent = ['slide'];
+                        }
+                        angular.forEach( updateEvent, function ( sliderEvent ) {
+                            slider.on( sliderEvent, function ( ev ) {
+                                ngModelCtrl.$setViewValue( ev.value );
+                                $timeout( function () {
                                     $scope.$apply();
-                                });
-                            }
-                        });
-                    });
+                                } );
+                            } );
+                        } );
 
+                        // Event listeners
+                        var sliderEvents = {
+                            slideStart: 'onStartSlide',
+                            slide: 'onSlide',
+                            slideStop: 'onStopSlide'
+                        };
+                        angular.forEach( sliderEvents, function ( sliderEventAttr, sliderEvent ) {
+                            slider.on( sliderEvent, function ( ev ) {
 
-                    if (angular.isDefined(attrs.ngDisabled)) {
-                        $scope.$watch(attrs.ngDisabled, function (value) {
-                            if (value) {
-                                slider.slider('disable');
-                            } else {
-                                slider.slider('enable');
-                            }
-                        });
+                                if ( $scope[sliderEventAttr] ) {
+                                    var invoker = $parse( attrs[sliderEventAttr] );
+                                    invoker( $scope.$parent, {$event: ev, value: ev.value} );
+
+                                    $timeout( function () {
+                                        $scope.$apply();
+                                    } );
+                                }
+                            } );
+                        } );
+
+                        if ( attrs.ngChange ) {
+                            ngModelCtrl.$viewChangeListeners.push( function () {
+                                $scope.$apply( attrs.ngChange );
+                            } );
+                        }
+
+                        // deregister ngDisabled watcher to prevent memory leaks
+                        if ( angular.isFunction( ngDisabledDeregisterFn ) ) {
+                            ngDisabledDeregisterFn();
+                            ngDisabledDeregisterFn = null;
+                        }
+                        if ( angular.isDefined( attrs.ngDisabled ) ) {
+                            ngDisabledDeregisterFn = $scope.$watch( attrs.ngDisabled, function ( value ) {
+                                if ( value ) {
+                                    slider.slider( 'disable' );
+                                }
+                                else {
+                                    slider.slider( 'enable' );
+                                }
+                            } );
+                        }
+                        // deregister ngModel watcher to prevent memory leaks
+                        if ( angular.isFunction( ngModelDeregisterFn ) ) ngModelDeregisterFn();
+                        ngModelDeregisterFn = $scope.$watch( 'ngModel', function ( value ) {
+                            slider.slider( 'setValue', value );
+                        } );
                     }
+                }
 
-
-                    $scope.$watch('ngModel', function(value) {
-                        slider.slider('setValue', value);
+                var watchers = ['min', 'max', 'step', 'range'];
+                angular.forEach(watchers, function(prop) {
+                    $scope.$watch(prop, function(){
+                        initSlider();
                     });
-                };
-
-                $scope.$watch('max', function(value){
-                     initSlider();
-                });
-
-                $scope.$watch('min', function(value){
-                    initSlider();
-                });
-
-                $scope.$watch('step', function(value){
-                    initSlider();
-                });
-
-                $scope.$watch('range', function(value) {
-                    initSlider();
                 });
             }
         };
