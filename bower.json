@@ -23,6 +23,6 @@
   ],
   "dependencies": {
     "seiyria-bootstrap-slider": "~v4.8",
-    "angular": "~1.2.16"
+    "angular": "~1.3.15"
   }
 }
