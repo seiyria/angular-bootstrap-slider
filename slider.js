@@ -22,13 +22,6 @@ angular.module('ui.bootstrap-slider', [])
                 initSlider();
 
                 function initSlider() {
-
-                    if (attrs.ngChange) {
-                        ngModelCtrl.$viewChangeListeners.push(function () {
-                            $scope.$apply(attrs.ngChange);
-                        });
-                    }
-
                     $.fn.slider.constructor.prototype.disable = function () {
                         this.picker.off();
                     };
@@ -36,12 +29,6 @@ angular.module('ui.bootstrap-slider', [])
                     $.fn.slider.constructor.prototype.enable = function () {
                         this.picker.on();
                     };
-
-                    if (attrs.ngChange) {
-                        ngModelCtrl.$viewChangeListeners.push(function () {
-                            $scope.$apply(attrs.ngChange);
-                        });
-                    }
 
                     var options = {};
                     if ($scope.sliderid) options.id = $scope.sliderid;
