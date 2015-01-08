@@ -155,12 +155,6 @@ angular.module('ui.bootstrap-slider', [])
                             } );
                         } );
 
-                        if ( attrs.ngChange ) {
-                            ngModelCtrl.$viewChangeListeners.push( function () {
-                                $scope.$apply( attrs.ngChange );
-                            } );
-                        }
-
                         // deregister ngDisabled watcher to prevent memory leaks
                         if ( angular.isFunction( ngDisabledDeregisterFn ) ) {
                             ngDisabledDeregisterFn();
