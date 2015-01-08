@@ -1,42 +1,65 @@
 angular.module( 'angular-bootstrap-slider-test', ['ui.bootstrap-slider'] )
 		.controller( 'TestCtrl', ['$scope', '$log', function ( $scope, $log ) {
 
-			$scope.sliders = {};
-			$scope.sliders.sliderValue = 0;
-			$scope.sliders.secondSliderValue = 0;
-			$scope.sliders.thirdSliderValue = 0;
-			$scope.sliders.fourthSliderValue = 0;
-			$scope.sliders.fithSliderValue = 0;
-			$scope.sliders.sixthSliderValue = 0;
-			$scope.sliders.seventhSliderValue = 0;
-			$scope.sliders.eighthSliderValue = 0;
-			$scope.sliders.ninthSliderValue = 0;
-
-			$scope.range = true;
-			$scope.value = [55, 70];
-
 			$scope.testOptions = {
 				min: 5,
-				max: 103,
-				step: 2.2,
-				value: 7,
-				rangeValue: [2, 20]
+				max: 100,
+				step: 5,
+				precision: 2,
+				orientation: 'horizontal',  // vertical
+				handle: 'round', //'square', 'triangle' or 'custom'
+				tooltip: 'show', //'hide','always'
+				tooltipseparator: ':',
+				tooltipsplit: false,
+				enabled: true,
+				naturalarrowkeys: false,
+				range: false,
+				ngDisabled: false,
+				reversed: false
 			};
 
-			$scope.sliders.rangeSliderValue = [10, 50];
-			$scope.sliders.rangeSliderValue2 = [10, 50];
+			$scope.range = true;
 
-			$scope.$watch( 'sliders.rangeSliderValue2', function ( value ) {
-				$log.log( 'sliders value has changed: ' + value );
-			} );
+			$scope.model = {
+				first: 0,
+				second: [],
+				third: 0,
+				fourth: 0,
+				fifth: 0,
+				sixth: 0,
+				seventh: 0,
+				eighth: 0,
+				ninth: 0,
+				tenth: 0
+			};
 
-      $scope.myFormater = function ( value ) {
-        return value + "%";
+			$scope.value = {
+				first: $scope.testOptions.min + $scope.testOptions.step,
+				second: [$scope.testOptions.min + $scope.testOptions.step, $scope.testOptions.max - $scope.testOptions.step],
+				third: 0,
+				fourth: 0,
+				fifth: 0,
+				sixth: 0,
+				seventh: 0,
+				eighth: 0,
+				ninth: 0,
+				tenth: 0
+			};
+
+			$scope.prefix = 'Current value: ';
+			$scope.suffix = '%';
+      $scope.formaterFn = function(value) {
+        return $scope.prefix + value + $scope.suffix;
       };
 
       $scope.delegateEvent = null;
-      $scope.slideDelegate = function ( value, $event ) {
-        $log.log( 'slide value: ' + value );
-        $scope.delegateEvent = $event;
+      $scope.slideDelegate = function ( value, event ) {
+	      if( angular.isObject(event) ) {
+		      $log.log('Slide delegate value on ' + event.type + ': ' + value);
+	      }
+	      else {
+		      $log.log('Slide delegate value: ' + event);
+	      }
+        $scope.delegateEvent = event;
       };
 	}]);
