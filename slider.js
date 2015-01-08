@@ -58,18 +58,6 @@ angular.module('ui.bootstrap-slider', [])
                     setBooleanOption('naturalarrowkeys', attrs.naturalarrowkeys, false);
                     setBooleanOption('reversed', attrs.reversed, false);
 
-                    if ($scope.value) {
-                        if (angular.isNumber($scope.value) || angular.isArray($scope.value)) {
-                            options.value = $scope.value;
-                        }
-                        else if (angular.isString($scope.value)) {
-                            options.value = getArrayOrValue($scope.value);
-                            if(!angular.isArray(options.value)) {
-                                options.value = parseFloat($scope.value);
-                            }
-                        }
-                    }
-
                     setBooleanOption('range', $scope.range, false);
                     if( options.range ) {
                         if( angular.isArray($scope.value) ) {
@@ -79,6 +67,8 @@ angular.module('ui.bootstrap-slider', [])
                             options.value = getArrayOrValue($scope.value);
                             if(!angular.isArray(options.value)) {
                                 var value = parseFloat($scope.value);
+                                if( isNaN(value) ) value = 5;
+
                                 if( value < $scope.min ) {
                                     value = $scope.min;
                                     options.value = [value, options.max];
@@ -86,6 +76,9 @@ angular.module('ui.bootstrap-slider', [])
                                 else if( value > $scope.max ) {
                                     value = $scope.max;
                                     options.value = [options.min, value];
+                                }
+                                else {
+                                    options.value = [options.min, options.max];
                                 }
                             }
                         }
