@@ -93,7 +93,8 @@ angular.module('ui.bootstrap-slider', [])
 
                     if ($scope.formater) options.formater = $scope.$eval($scope.formater);
 
-                    var slider = element.find( ".slider-input" ).eq( 0 );
+                    var slider = $(element).find( ".slider-input" ).eq( 0 );
+                    
                     // check if slider jQuery plugin exists
                     if( $.fn.slider ) {
                         // adding methods to jQuery slider plugin prototype
