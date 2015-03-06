@@ -128,6 +128,12 @@ angular.module('ui.bootstrap-slider', [])
                                 } );
                             } );
                         } );
+                        slider.on( 'change', function ( ev ) {
+                            ngModelCtrl.$setViewValue( ev.value.newValue );
+                            $timeout( function () {
+                                $scope.$apply();
+                            } );
+                        } );
 
                         // Event listeners
                         var sliderEvents = {
