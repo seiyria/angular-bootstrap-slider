@@ -1,3 +1,7 @@
 # bower #
 #########
 bower_components
+
+# jetbrains #
+#############
+.idea

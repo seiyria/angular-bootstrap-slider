@@ -22,7 +22,7 @@
     "tests"
   ],
   "dependencies": {
-    "seiyria-bootstrap-slider": "~3.1.0",
+    "seiyria-bootstrap-slider": "~v4.8",
     "angular": "~1.2.16"
   }
 }

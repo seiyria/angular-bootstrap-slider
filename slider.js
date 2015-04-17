@@ -13,7 +13,7 @@ angular.module('ui.bootstrap-slider', [])
                 ngModel: '=',
                 range:'=',
                 sliderid: '=',
-                formater: '&',
+                formatter: '&',
                 onStartSlide: '&',
                 onStopSlide: '&',
                 onSlide: '&'
@@ -91,17 +91,17 @@ angular.module('ui.bootstrap-slider', [])
                         setFloatOption('value', $scope.value, 5);
                     }
 
-                    if ($scope.formater) options.formater = $scope.$eval($scope.formater);
+                    if ($scope.formatter) options.formatter = $scope.$eval($scope.formatter);
 
                     var slider = $(element).find( ".slider-input" ).eq( 0 );
                     
                     // check if slider jQuery plugin exists
                     if( $.fn.slider ) {
                         // adding methods to jQuery slider plugin prototype
-                        $.fn.slider.Constructor.prototype.disable = function () {
+                        $.fn.slider.constructor.prototype.disable = function () {
                             this.picker.off();
                         };
-                        $.fn.slider.Constructor.prototype.enable = function () {
+                        $.fn.slider.constructor.prototype.enable = function () {
                             this.picker.on();
                         };
 
