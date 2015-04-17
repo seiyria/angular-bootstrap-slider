@@ -61,11 +61,6 @@ angular.module('ui.bootstrap-slider', [])
                     setBooleanOption('naturalarrowkeys', attrs.naturalarrowkeys, false);
                     setBooleanOption('reversed', attrs.reversed, false);
 
-                    // if the value is undefined then use the model
-                    if ($scope.value === 'undefined') {
-                        $scope.value = $scope.ngModel;
-                    }
-
                     setBooleanOption('range', $scope.range, false);
                     if (options.range) {
                         if (angular.isArray($scope.value)) {
