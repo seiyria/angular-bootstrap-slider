@@ -16,3 +16,17 @@ Sample Usage
 <!-- ..or an attribute -->
 <span slider ng-model="sliders.secondSliderValue" min="minTest"></span>
 ```
+
+Troubleshooting
+============
+#### Tooltips
+If you Want to hide the tooltip on your slider (or define a value for the bootstrap-slider `data-slider-tooltip` options, such as "show", "hide" or "always"), you should use the `tooltip` attribute, like this :
+```html
+<!-- it can be used as an element -->
+<slider ng-model="sliders.sliderValue" min="testOptions.min" step="testOptions.step" max="testOptions.max" value="testOptions.value" tooltip="hide"></slider>
+```
+But, if the `tooltip` attribute is in conflict with another angular directive, you can use the alternative `slider-tooltip` attribute :
+```html
+<!-- it can be used as an element -->
+<slider ng-model="sliders.sliderValue" min="testOptions.min" step="testOptions.step" max="testOptions.max" value="testOptions.value" slider-tooltip="hide"></slider>
+```

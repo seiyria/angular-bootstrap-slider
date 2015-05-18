@@ -46,7 +46,7 @@ angular.module('ui.bootstrap-slider', [])
                     setOption('orientation', attrs.orientation, 'horizontal');
                     setOption('selection', attrs.selection, 'before');
                     setOption('handle', attrs.handle, 'round');
-                    setOption('tooltip', attrs.tooltip, 'show');
+                    setOption('tooltip', attrs.sliderTooltip || attrs.tooltip, 'show');
                     setOption('tooltipseparator', attrs.tooltipseparator, ':');
 
                     setFloatOption('min', $scope.min, 0);
