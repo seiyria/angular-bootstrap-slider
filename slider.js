@@ -164,7 +164,7 @@ angular.module('ui.bootstrap-slider', [])
                             ngDisabledDeregisterFn = null;
                         }
                         if (angular.isDefined(attrs.ngDisabled)) {
-                            ngDisabledDeregisterFn = $scope.$watch(attrs.ngDisabled, function (value) {
+                            ngDisabledDeregisterFn = $scope.$parent.$watch(attrs.ngDisabled, function (value) {
                                 if (value) {
                                     slider.slider('disable');
                                 }
