@@ -140,16 +140,16 @@ angular.module('ui.bootstrap-slider', [])
 
                         // Event listeners
                         var sliderEvents = {
-                            slideStart: 'onStartSlide',
-                            slide: 'onSlide',
-                            slideStop: 'onStopSlide'
+                            slideStart: 'onstartslide',
+                            slide: 'onslide',
+                            slideStop: 'onstopslide'
                         };
                         angular.forEach(sliderEvents, function (sliderEventAttr, sliderEvent) {
                             slider.on(sliderEvent, function (ev) {
 
-                                if ($scope[sliderEventAttr]) {
+                                if (attrs[sliderEventAttr]) {
                                     var invoker = $parse(attrs[sliderEventAttr]);
-                                    invoker($scope.$parent, {$event: ev, value: ev.value});
+                                    invoker($scope.$parent)(ev, ev.value);
 
                                     $timeout(function () {
                                         $scope.$apply();
