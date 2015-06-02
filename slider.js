@@ -177,7 +177,7 @@ angular.module('ui.bootstrap-slider', [])
                         if (angular.isFunction(ngModelDeregisterFn)) ngModelDeregisterFn();
                         ngModelDeregisterFn = $scope.$watch('ngModel', function (value) {
                             slider.slider('setValue', value);
-                        });
+                        }, true);
                     }
                 }
 
