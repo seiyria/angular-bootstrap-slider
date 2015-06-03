@@ -11,6 +11,7 @@ angular.module('ui.bootstrap-slider', [])
                 step: "=",
                 value: "=",
                 ngModel: '=',
+                ngDisabled: '=',
                 range: '=',
                 sliderid: '=',
                 formatter: '&',
@@ -163,16 +164,16 @@ angular.module('ui.bootstrap-slider', [])
                             ngDisabledDeregisterFn();
                             ngDisabledDeregisterFn = null;
                         }
-                        if (angular.isDefined(attrs.ngDisabled)) {
-                            ngDisabledDeregisterFn = $scope.$parent.$watch(attrs.ngDisabled, function (value) {
-                                if (value) {
-                                    slider.slider('disable');
-                                }
-                                else {
-                                    slider.slider('enable');
-                                }
-                            });
-                        }
+
+                        ngDisabledDeregisterFn = $scope.$parent.$watch('ngDisabled', function (value) {
+                            if (value) {
+                                slider.slider('disable');
+                            }
+                            else {
+                                slider.slider('enable');
+                            }
+                        });
+
                         // deregister ngModel watcher to prevent memory leaks
                         if (angular.isFunction(ngModelDeregisterFn)) ngModelDeregisterFn();
                         ngModelDeregisterFn = $scope.$watch('ngModel', function (value) {
