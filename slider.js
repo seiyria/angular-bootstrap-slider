@@ -141,9 +141,9 @@ angular.module('ui.bootstrap-slider', [])
 
                         // Event listeners
                         var sliderEvents = {
-                            slideStart: 'onstartslide',
-                            slide: 'onslide',
-                            slideStop: 'onstopslide'
+                            slideStart: 'onStartSlide',
+                            slide: 'onSlide',
+                            slideStop: 'onStopSlide'
                         };
                         angular.forEach(sliderEvents, function (sliderEventAttr, sliderEvent) {
                             slider.on(sliderEvent, function (ev) {
