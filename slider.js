@@ -110,8 +110,9 @@ angular.module('ui.bootstrap-slider', [])
                         };
 
                         // destroy previous slider to reset all options
-                        slider.slider(options);
-                        slider.slider('destroy');
+                        if(slider.data("slider"))
+                            slider.slider('destroy');
+
                         slider.slider(options);
 
                         // everything that needs slider element
@@ -146,16 +147,12 @@ angular.module('ui.bootstrap-slider', [])
                             slideStop: 'onStopSlide'
                         };
                         angular.forEach(sliderEvents, function (sliderEventAttr, sliderEvent) {
-                            var fn = $parse(attrs[sliderEventAttr], /* interceptorFn */ null, /* expensiveChecks */ true);
-                            slider.on(sliderEvent, function (ev) {
-                                if (attrs[sliderEventAttr]) {
-                                    var callback = function() {
-                                        fn($scope, {$event:ev});
-                                    };
+                            slider.on(sliderEvent, function () {
+                                if ($scope[sliderEventAttr]) {
                                     if ($rootScope.$$phase) {
-                                       $scope.$evalAsync(callback);
+                                        $scope.$evalAsync($scope[sliderEventAttr]);
                                     } else {
-                                        $scope.$apply(callback);
+                                        $scope.$apply($scope[sliderEventAttr]);
                                     }
                                 }
                             });
@@ -167,7 +164,7 @@ angular.module('ui.bootstrap-slider', [])
                             ngDisabledDeregisterFn = null;
                         }
 
-                        ngDisabledDeregisterFn = $scope.$watch('ngDisabled', function (value) {
+                        ngDisabledDeregisterFn = $scope.$parent.$watch('ngDisabled', function (value) {
                             if (value) {
                                 slider.slider('disable');
                             }
@@ -177,12 +174,9 @@ angular.module('ui.bootstrap-slider', [])
                         });
 
                         // deregister ngModel watcher to prevent memory leaks
-                        if (angular.isFunction(ngModelDeregisterFn)) {
-                            ngModelDeregisterFn();
-                            ngModelDeregisterFn = null;
-                        }
+                        if (angular.isFunction(ngModelDeregisterFn)) ngModelDeregisterFn();
                         ngModelDeregisterFn = $scope.$watch('ngModel', function (value) {
-                            slider.slider('setValue', value);
+                            slider.slider('setValue', parseFloat(value));
                         }, true);
                     }
                 }
