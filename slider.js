@@ -1,5 +1,5 @@
 angular.module('ui.bootstrap-slider', [])
-    .directive('slider', ['$parse', '$timeout', function ($parse, $timeout, $rootScope) {
+    .directive('slider', ['$parse', '$timeout', '$rootScope', function ($parse, $timeout, $rootScope) {
         return {
             restrict: 'AE',
             replace: true,
