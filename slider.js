@@ -1,5 +1,5 @@
 angular.module('ui.bootstrap-slider', [])
-    .directive('slider', ['$parse', '$timeout', function ($parse, $timeout) {
+    .directive('slider', ['$parse', '$timeout', function ($parse, $timeout, $rootScope) {
         return {
             restrict: 'AE',
             replace: true,
@@ -19,7 +19,7 @@ angular.module('ui.bootstrap-slider', [])
                 onStopSlide: '&',
                 onSlide: '&'
             },
-            link: function ($scope, element, attrs, ngModelCtrl, $compile, $rootScope) {
+            link: function ($scope, element, attrs, ngModelCtrl, $compile) {
                 var ngModelDeregisterFn, ngDisabledDeregisterFn;
 
                 initSlider();
