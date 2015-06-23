@@ -1,5 +1,5 @@
 angular.module('ui.bootstrap-slider', [])
-    .directive('slider', ['$parse', '$timeout', function ($parse, $timeout) {
+    .directive('slider', ['$parse', '$timeout', '$rootScope', function ($parse, $timeout, $rootScope) {
         return {
             restrict: 'AE',
             replace: true,
@@ -110,8 +110,9 @@ angular.module('ui.bootstrap-slider', [])
                         };
 
                         // destroy previous slider to reset all options
-                        slider.slider(options);
-                        slider.slider('destroy');
+                        if(slider.data("slider"))
+                            slider.slider('destroy');
+
                         slider.slider(options);
 
                         // everything that needs slider element
@@ -146,15 +147,13 @@ angular.module('ui.bootstrap-slider', [])
                             slideStop: 'onStopSlide'
                         };
                         angular.forEach(sliderEvents, function (sliderEventAttr, sliderEvent) {
-                            slider.on(sliderEvent, function (ev) {
-
-                                if (attrs[sliderEventAttr]) {
-                                    var invoker = $parse(attrs[sliderEventAttr]);
-                                    invoker($scope.$parent)(ev, ev.value);
-
-                                    $timeout(function () {
-                                        $scope.$apply();
-                                    });
+                            slider.on(sliderEvent, function () {
+                                if ($scope[sliderEventAttr]) {
+                                    if ($rootScope.$$phase) {
+                                        $scope.$evalAsync($scope[sliderEventAttr]);
+                                    } else {
+                                        $scope.$apply($scope[sliderEventAttr]);
+                                    }
                                 }
                             });
                         });
@@ -175,12 +174,9 @@ angular.module('ui.bootstrap-slider', [])
                         });
 
                         // deregister ngModel watcher to prevent memory leaks
-                        if (angular.isFunction(ngModelDeregisterFn)) {
-                            ngModelDeregisterFn();
-                            ngModelDeregisterFn = null;
-                        }
+                        if (angular.isFunction(ngModelDeregisterFn)) ngModelDeregisterFn();
                         ngModelDeregisterFn = $scope.$watch('ngModel', function (value) {
-                            slider.slider('setValue', value);
+                            slider.slider('setValue', parseFloat(value));
                         }, true);
                     }
                 }
