@@ -19,7 +19,7 @@ angular.module('ui.bootstrap-slider', [])
                 onStopSlide: '&',
                 onSlide: '&'
             },
-            link: function ($scope, element, attrs, ngModelCtrl, $compile) {
+            link: function ($scope, element, attrs, ngModelCtrl, $compile, $rootScope) {
                 var ngModelDeregisterFn, ngDisabledDeregisterFn;
 
                 initSlider();
@@ -146,15 +146,17 @@ angular.module('ui.bootstrap-slider', [])
                             slideStop: 'onStopSlide'
                         };
                         angular.forEach(sliderEvents, function (sliderEventAttr, sliderEvent) {
+                            var fn = $parse(attrs[sliderEventAttr], /* interceptorFn */ null, /* expensiveChecks */ true);
                             slider.on(sliderEvent, function (ev) {
-
                                 if (attrs[sliderEventAttr]) {
-                                    var invoker = $parse(attrs[sliderEventAttr]);
-                                    invoker($scope.$parent)(ev, ev.value);
-
-                                    $timeout(function () {
-                                        $scope.$apply();
-                                    });
+                                    var callback = function() {
+                                        fn(scope, {$event:ev});
+                                    };
+                                    if ($rootScope.$$phase) {
+                                       scope.$evalAsync(callback);
+                                    } else {
+                                        scope.$apply(callback);
+                                    }
                                 }
                             });
                         });
