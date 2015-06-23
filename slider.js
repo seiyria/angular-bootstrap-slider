@@ -150,12 +150,12 @@ angular.module('ui.bootstrap-slider', [])
                             slider.on(sliderEvent, function (ev) {
                                 if (attrs[sliderEventAttr]) {
                                     var callback = function() {
-                                        fn(scope, {$event:ev});
+                                        fn($scope, {$event:ev});
                                     };
                                     if ($rootScope.$$phase) {
-                                       scope.$evalAsync(callback);
+                                       $scope.$evalAsync(callback);
                                     } else {
-                                        scope.$apply(callback);
+                                        $scope.$apply(callback);
                                     }
                                 }
                             });
