@@ -14,6 +14,8 @@ angular.module('ui.bootstrap-slider', [])
                 ngDisabled: '=',
                 range: '=',
                 sliderid: '=',
+                ticks: '=',
+                ticksLabels: '=',
                 formatter: '&',
                 onStartSlide: '&',
                 onStopSlide: '&',
@@ -49,6 +51,8 @@ angular.module('ui.bootstrap-slider', [])
                     setOption('handle', attrs.handle, 'round');
                     setOption('tooltip', attrs.sliderTooltip || attrs.tooltip, 'show');
                     setOption('tooltipseparator', attrs.tooltipseparator, ':');
+                    setOption('ticks', $scope.ticks);
+                    setOption('ticks_labels', $scope.ticksLabels);
 
                     setFloatOption('min', $scope.min, 0);
                     setFloatOption('max', $scope.max, 10);
@@ -177,7 +181,7 @@ angular.module('ui.bootstrap-slider', [])
                         if (angular.isFunction(ngModelDeregisterFn)) ngModelDeregisterFn();
                         ngModelDeregisterFn = $scope.$watch('ngModel', function (value) {
                             if($scope.range){
-                                slider.slider('setValue', value);    
+                                slider.slider('setValue', value);
                             }else{
                                 slider.slider('setValue', parseFloat(value));
                             }
