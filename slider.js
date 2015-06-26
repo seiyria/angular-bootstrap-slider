@@ -176,7 +176,11 @@ angular.module('ui.bootstrap-slider', [])
                         // deregister ngModel watcher to prevent memory leaks
                         if (angular.isFunction(ngModelDeregisterFn)) ngModelDeregisterFn();
                         ngModelDeregisterFn = $scope.$watch('ngModel', function (value) {
-                            slider.slider('setValue', parseFloat(value));
+                            if($scope.range){
+                                slider.slider('setValue', value);    
+                            }else{
+                                slider.slider('setValue', parseFloat(value));
+                            }
                         }, true);
                     }
                 }
