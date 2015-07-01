@@ -1,7 +1,7 @@
 angular-bootstrap-slider
 ========================
 
-This plugin was mostly put together quickly with the intent of using something that worked. It has zero test coverage. It is, however, registered on bower as `angular-bootstrap-slider`. Just include `slider.js` and use the package `ui.bootstrap-slider`.
+This plugin was mostly put together quickly with the intent of using something that worked. It has zero test coverage. It is, however, registered on bower as `angular-bootstrap-slider`. Just include `slider.js` and use the package `ui.bootstrap-slider`. You will also need to include bootstrap-sliders CSS and JS.
 
 Available Options
 =================
