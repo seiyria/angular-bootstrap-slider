@@ -103,10 +103,9 @@ angular.module('ui.bootstrap-slider', [])
 
                     if ($scope.formatter) options.formatter = $scope.$eval($scope.formatter);
 
-                    var slider = $(element).find(".slider-input").eq(0);
 
                     // check if slider jQuery plugin exists
-                    if ($.fn.slider) {
+                    if ('$' in window && $.fn.slider) {
                         // adding methods to jQuery slider plugin prototype
                         $.fn.slider.constructor.prototype.disable = function () {
                             this.picker.off();
@@ -114,82 +113,84 @@ angular.module('ui.bootstrap-slider', [])
                         $.fn.slider.constructor.prototype.enable = function () {
                             this.picker.on();
                         };
+                    }
 
-                        // destroy previous slider to reset all options
-                        if(slider.data("slider"))
-                            slider.slider('destroy');
+                    // destroy previous slider to reset all options
+                    if (element[0].__slider)
+                        element[0].__slider.destroy();
 
-                        slider.slider(options);
+                    var slider = new Slider(element[0].getElementsByClassName('slider-input')[0], options);
+                    element[0].__slider = slider;
 
-                        // everything that needs slider element
-                        var updateEvent = getArrayOrValue(attrs.updateevent);
-                        if (angular.isString(updateEvent)) {
-                            // if only single event name in string
-                            updateEvent = [updateEvent];
-                        }
-                        else {
-                            // default to slide event
-                            updateEvent = ['slide'];
-                        }
-                        angular.forEach(updateEvent, function (sliderEvent) {
-                            slider.on(sliderEvent, function (ev) {
-                                ngModelCtrl.$setViewValue(ev.value);
-                                $timeout(function () {
-                                    $scope.$apply();
-                                });
-                            });
-                        });
-                        slider.on('change', function (ev) {
-                            ngModelCtrl.$setViewValue(ev.value.newValue);
+                    // everything that needs slider element
+                    var updateEvent = getArrayOrValue(attrs.updateevent);
+                    if (angular.isString(updateEvent)) {
+                        // if only single event name in string
+                        updateEvent = [updateEvent];
+                    }
+                    else {
+                        // default to slide event
+                        updateEvent = ['slide'];
+                    }
+                    angular.forEach(updateEvent, function (sliderEvent) {
+                        slider.on(sliderEvent, function (ev) {
+                            ngModelCtrl.$setViewValue(ev.value);
                             $timeout(function () {
                                 $scope.$apply();
                             });
                         });
+                    });
+                    slider.on('change', function (ev) {
+                        ngModelCtrl.$setViewValue(ev.value.newValue);
+                        $timeout(function () {
+                            $scope.$apply();
+                        });
+                    });
 
-                        // Event listeners
-                        var sliderEvents = {
-                            slideStart: 'onStartSlide',
-                            slide: 'onSlide',
-                            slideStop: 'onStopSlide'
-                        };
-                        angular.forEach(sliderEvents, function (sliderEventAttr, sliderEvent) {
-                            slider.on(sliderEvent, function () {
-                                if ($scope[sliderEventAttr]) {
-                                    if ($rootScope.$$phase) {
-                                        $scope.$evalAsync($scope[sliderEventAttr]);
-                                    } else {
-                                        $scope.$apply($scope[sliderEventAttr]);
-                                    }
+                    // Event listeners
+                    var sliderEvents = {
+                        slideStart: 'onStartSlide',
+                        slide: 'onSlide',
+                        slideStop: 'onStopSlide'
+                    };
+                    angular.forEach(sliderEvents, function (sliderEventAttr, sliderEvent) {
+                        slider.on(sliderEvent, function () {
+                            if ($scope[sliderEventAttr]) {
+                                if ($rootScope.$$phase) {
+                                    $scope.$evalAsync($scope[sliderEventAttr]);
+                                } else {
+                                    $scope.$apply($scope[sliderEventAttr]);
                                 }
-                            });
-                        });
-
-                        // deregister ngDisabled watcher to prevent memory leaks
-                        if (angular.isFunction(ngDisabledDeregisterFn)) {
-                            ngDisabledDeregisterFn();
-                            ngDisabledDeregisterFn = null;
-                        }
-
-                        ngDisabledDeregisterFn = $scope.$watch('ngDisabled', function (value) {
-                            if (value) {
-                                slider.slider('disable');
-                            }
-                            else {
-                                slider.slider('enable');
                             }
                         });
+                    });
 
-                        // deregister ngModel watcher to prevent memory leaks
-                        if (angular.isFunction(ngModelDeregisterFn)) ngModelDeregisterFn();
-                        ngModelDeregisterFn = $scope.$watch('ngModel', function (value) {
-                            if($scope.range){
-                                slider.slider('setValue', value);
-                            }else{
-                                slider.slider('setValue', parseFloat(value));
-                            }
-                        }, true);
+                    // deregister ngDisabled watcher to prevent memory leaks
+                    if (angular.isFunction(ngDisabledDeregisterFn)) {
+                        ngDisabledDeregisterFn();
+                        ngDisabledDeregisterFn = null;
                     }
+
+                    ngDisabledDeregisterFn = $scope.$watch('ngDisabled', function (value) {
+                        if (value) {
+                            slider.disable();
+                        }
+                        else {
+                            slider.enable();
+                        }
+                    });
+
+                    // deregister ngModel watcher to prevent memory leaks
+                    if (angular.isFunction(ngModelDeregisterFn)) ngModelDeregisterFn();
+                    ngModelDeregisterFn = $scope.$watch('ngModel', function (value) {
+                        if($scope.range){
+                            slider.setValue(value);
+                        }else{
+                            slider.setValue(parseFloat(value));
+                        }
+                    }, true);
                 }
+
 
                 var watchers = ['min', 'max', 'step', 'range', 'scale'];
                 angular.forEach(watchers, function (prop) {
