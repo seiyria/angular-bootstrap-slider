@@ -134,14 +134,14 @@ angular.module('ui.bootstrap-slider', [])
                     }
                     angular.forEach(updateEvent, function (sliderEvent) {
                         slider.on(sliderEvent, function (ev) {
-                            ngModelCtrl.$setViewValue(ev.value);
+                            ngModelCtrl.$setViewValue(ev);
                             $timeout(function () {
                                 $scope.$apply();
                             });
                         });
                     });
                     slider.on('change', function (ev) {
-                        ngModelCtrl.$setViewValue(ev.value.newValue);
+                        ngModelCtrl.$setViewValue(ev.newValue);
                         $timeout(function () {
                             $scope.$apply();
                         });
