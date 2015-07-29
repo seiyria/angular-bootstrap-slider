@@ -51,6 +51,7 @@ angular.module('ui.bootstrap-slider', [])
                     setOption('selection', attrs.selection, 'before');
                     setOption('handle', attrs.handle, 'round');
                     setOption('tooltip', attrs.sliderTooltip || attrs.tooltip, 'show');
+                    setOption('tooltip_position', attrs.sliderTooltipPosition, 'top');
                     setOption('tooltipseparator', attrs.tooltipseparator, ':');
                     setOption('ticks', $scope.ticks);
                     setOption('ticks_labels', $scope.ticksLabels);
