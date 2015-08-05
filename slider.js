@@ -155,12 +155,18 @@ angular.module('ui.bootstrap-slider', [])
                         slideStop: 'onStopSlide'
                     };
                     angular.forEach(sliderEvents, function (sliderEventAttr, sliderEvent) {
-                        slider.on(sliderEvent, function () {
+                        var fn = $parse(attrs[sliderEventAttr]);
+                        slider.on(sliderEvent, function (ev) {
                             if ($scope[sliderEventAttr]) {
+                                
+                                var callback = function () {
+                                    fn($scope.$parent, { $event: ev, value: ev });
+                                }
+
                                 if ($rootScope.$$phase) {
-                                    $scope.$evalAsync($scope[sliderEventAttr]);
+                                    $scope.$evalAsync(callback);
                                 } else {
-                                    $scope.$apply($scope[sliderEventAttr]);
+                                    $scope.$apply(callback);
                                 }
                             }
                         });
