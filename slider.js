@@ -16,6 +16,7 @@ angular.module('ui.bootstrap-slider', [])
                 sliderid: '=',
                 ticks: '=',
                 ticksLabels: '=',
+                ticksPositions: '=',
                 scale: '=',
                 formatter: '&',
                 onStartSlide: '&',
@@ -55,6 +56,7 @@ angular.module('ui.bootstrap-slider', [])
                     setOption('tooltipseparator', attrs.tooltipseparator, ':');
                     setOption('ticks', $scope.ticks);
                     setOption('ticks_labels', $scope.ticksLabels);
+                    setOption('ticks_positions', $scope.ticksPositions);
                     setOption('scale', $scope.scale, 'linear');
 
                     setFloatOption('min', $scope.min, 0);
