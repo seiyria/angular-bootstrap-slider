@@ -37,7 +37,7 @@ angular.module('ui.bootstrap-slider', [])
                     }
 
                     function setFloatOption(key, value, defaultValue) {
-                        options[key] = value ? parseFloat(value) : defaultValue;
+                        options[key] = value || value === 0 ? parseFloat(value) : defaultValue;
                     }
 
                     function setBooleanOption(key, value, defaultValue) {
