@@ -66,8 +66,8 @@ angular.module('ui.bootstrap-slider', [])
                     setFloatOption('step', $scope.step, 1);
                     var strNbr = options.step + '';
                     var dotPos = strNbr.search(/[^.,]*$/);
-                    var decimals = strNbr.substring(dotPos).length;
-                    setFloatOption('precision', attrs.precision, decimals);
+                    var decimals = strNbr.substring(dotPos);
+                    setFloatOption('precision', attrs.precision, decimals.length);
 
                     setBooleanOption('tooltip_split', attrs.tooltipsplit, false);
                     setBooleanOption('enabled', attrs.enabled, true);
