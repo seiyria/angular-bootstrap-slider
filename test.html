@@ -14,9 +14,9 @@
         <input id="sliderId" type="text" ng-model="testOptions.sliderId">
 
         <label for="modelValue">Slider Value in ng-model:</label>
-        <input id="modelValue" type="range" ng-model="model.first" min="testOptions.min" step="testOptions.step"
-               max="testOptions.max">
-        <input type="number" ng-model="model.first" class="form-control">
+        <input id="modelValue" type="range" ng-model="model.first" min="{{testOptions.min}}" step="{{testOptions.step}}"
+               max="{{testOptions.max}}">
+        <input ng-model="model.first" class="form-control">
 
         <label for="value">Value:</label>
         <input id="value" type="number" ng-model="value.first" class="form-control">
@@ -71,7 +71,7 @@
             max="testOptions.max"
             step="testOptions.step"
             range="testOptions.range"
-            precision="testOptions.precision"
+            precision="{{ testOptions.precision }}"
             reversed="{{ testOptions.reversed }}"
             orientation="{{ testOptions.orientation }}"
             handle="{{ testOptions.handle }}"
@@ -122,6 +122,7 @@
 
         <label for="formatter_sufffix">Formatter suffix:</label>
         <input id="formatter_sufffix" type="text" ng-model="suffix" class="form-control">
+        <button ng-click="$broadcast('slider:relayout')">Relayout</button>
     </p>
 
     Slider with configurable tooltip<br>
@@ -129,7 +130,7 @@
             ng-model="model.third"
             precision="{{ testOptions.precision }}"
             tooltip="{{ testOptions.tooltip }}"
-            formatter="formatterFn"
+            formatter="formatterFn(value)"
             >
     </slider>
     Model: {{model.third}}<br>
