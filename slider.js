@@ -27,7 +27,7 @@ angular.module('ui.bootstrap-slider', [])
             link: function ($scope, element, attrs, ngModelCtrl, $compile) {
                 var ngModelDeregisterFn, ngDisabledDeregisterFn;
 
-                initSlider();
+                var slider = initSlider();
 
                 function initSlider() {
                     var options = {};
@@ -201,15 +201,20 @@ angular.module('ui.bootstrap-slider', [])
                             slider.relayout();
                         });
                     }, true);
+
+                    return slider;
                 }
 
 
                 var watchers = ['min', 'max', 'step', 'range', 'scale'];
                 angular.forEach(watchers, function (prop) {
                     $scope.$watch(prop, function () {
-                        initSlider();
-
+                        slider = initSlider();
                     });
+                });
+
+                $scope.$on('slider:relayout', function() {
+                    slider.relayout();
                 });
             }
         };

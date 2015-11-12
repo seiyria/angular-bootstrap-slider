@@ -122,6 +122,7 @@
 
         <label for="formatter_sufffix">Formatter suffix:</label>
         <input id="formatter_sufffix" type="text" ng-model="suffix" class="form-control">
+        <button ng-click="$broadcast('slider:relayout')">Relayout</button>
     </p>
 
     Slider with configurable tooltip<br>
