@@ -107,7 +107,11 @@ angular.module('ui.bootstrap-slider', [])
                         setFloatOption('value', $scope.value, 5);
                     }
 
-                    if ($scope.formatter) options.formatter = $scope.$eval($scope.formatter);
+                    if (attrs.formatter) {
+                        options.formatter = function(value) {
+                            return $scope.formatter({value: value});
+                        }
+                    }
 
 
                     // check if slider jQuery plugin exists
@@ -140,18 +144,17 @@ angular.module('ui.bootstrap-slider', [])
                     }
                     angular.forEach(updateEvent, function (sliderEvent) {
                         slider.on(sliderEvent, function (ev) {
-                            ngModelCtrl.$setViewValue(ev);
                             $timeout(function () {
-                                $scope.$apply();
+                                ngModelCtrl.$setViewValue(ev);
                             });
                         });
                     });
                     slider.on('change', function (ev) {
-                        ngModelCtrl.$setViewValue(ev.newValue);
                         $timeout(function () {
-                            $scope.$apply();
+                            ngModelCtrl.$setViewValue(ev.newValue);
                         });
                     });
+
 
                     // Event listeners
                     var sliderEvents = {
@@ -164,15 +167,9 @@ angular.module('ui.bootstrap-slider', [])
                         slider.on(sliderEvent, function (ev) {
                             if ($scope[sliderEventAttr]) {
                                 
-                                var callback = function () {
+                                $timeout(function () {
                                     fn($scope.$parent, { $event: ev, value: ev });
-                                }
-
-                                if ($rootScope.$$phase) {
-                                    $scope.$evalAsync(callback);
-                                } else {
-                                    $scope.$apply(callback);
-                                }
+                                });
                             }
                         });
                     });
@@ -195,11 +192,14 @@ angular.module('ui.bootstrap-slider', [])
                     // deregister ngModel watcher to prevent memory leaks
                     if (angular.isFunction(ngModelDeregisterFn)) ngModelDeregisterFn();
                     ngModelDeregisterFn = $scope.$watch('ngModel', function (value) {
-                        if($scope.range){
-                            slider.setValue(value);
-                        }else{
-                            slider.setValue(parseFloat(value));
-                        }
+                        $timeout(function() {
+							if($scope.range){
+								slider.setValue(value);
+							}else{
+								slider.setValue(parseFloat(value));
+							}
+                            slider.relayout();
+                        });
                     }, true);
                 }
 
@@ -208,6 +208,7 @@ angular.module('ui.bootstrap-slider', [])
                 angular.forEach(watchers, function (prop) {
                     $scope.$watch(prop, function () {
                         initSlider();
+
                     });
                 });
             }
