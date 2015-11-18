@@ -144,15 +144,11 @@ angular.module('ui.bootstrap-slider', [])
                     }
                     angular.forEach(updateEvent, function (sliderEvent) {
                         slider.on(sliderEvent, function (ev) {
-                            $timeout(function () {
-                                ngModelCtrl.$setViewValue(ev);
-                            });
+                            ngModelCtrl.$setViewValue(ev);
                         });
                     });
                     slider.on('change', function (ev) {
-                        $timeout(function () {
-                            ngModelCtrl.$setViewValue(ev.newValue);
-                        });
+                        ngModelCtrl.$setViewValue(ev.newValue);
                     });
 
 
@@ -166,10 +162,7 @@ angular.module('ui.bootstrap-slider', [])
                         var fn = $parse(attrs[sliderEventAttr]);
                         slider.on(sliderEvent, function (ev) {
                             if ($scope[sliderEventAttr]) {
-                                
-                                $timeout(function () {
-                                    fn($scope.$parent, { $event: ev, value: ev });
-                                });
+                                fn($scope.$parent, { $event: ev, value: ev });
                             }
                         });
                     });
@@ -192,14 +185,12 @@ angular.module('ui.bootstrap-slider', [])
                     // deregister ngModel watcher to prevent memory leaks
                     if (angular.isFunction(ngModelDeregisterFn)) ngModelDeregisterFn();
                     ngModelDeregisterFn = $scope.$watch('ngModel', function (value) {
-                        $timeout(function() {
-							if($scope.range){
-								slider.setValue(value);
-							}else{
-								slider.setValue(parseFloat(value));
-							}
-                            slider.relayout();
-                        });
+                        if($scope.range){
+                            slider.setValue(value);
+                        }else{
+                            slider.setValue(parseFloat(value));
+                        }
+                        slider.relayout();
                     }, true);
 
                     return slider;
