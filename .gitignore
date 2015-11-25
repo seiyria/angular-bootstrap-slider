@@ -2,6 +2,10 @@
 #########
 bower_components
 
+# npm #
+node_modules
+
 # jetbrains #
 #############
 .idea
+*.iml
