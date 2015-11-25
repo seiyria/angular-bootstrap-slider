@@ -63,7 +63,6 @@ angular.module('ui.bootstrap-slider', [])
                     setOption('scale', $scope.scale, 'linear');
                     setOption('focus', $scope.focus);
 
-
                     setFloatOption('min', $scope.min, 0);
                     setFloatOption('max', $scope.max, 10);
                     setFloatOption('step', $scope.step, 1);
