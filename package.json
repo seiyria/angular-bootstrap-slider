@@ -22,12 +22,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JulianWielga/angular-bootstrap-slider.git"
+    "url": "git+https://github.com/seiyria/angular-bootstrap-slider.git"
   },
   "author": "Kyle Kemp <kyle@seiyria.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/JulianWielga/angular-bootstrap-slider/issues"
+    "url": "https://github.com/seiyria/angular-bootstrap-slider/issues"
   },
-  "homepage": "https://github.com/JulianWielga/angular-bootstrap-slider#readme"
+  "homepage": "https://github.com/seiyria/angular-bootstrap-slider#readme"
 }
