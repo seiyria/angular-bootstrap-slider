@@ -163,7 +163,9 @@ angular.module('ui.bootstrap-slider', [])
                         var fn = $parse(attrs[sliderEventAttr]);
                         slider.on(sliderEvent, function (ev) {
                             if ($scope[sliderEventAttr]) {
-                                fn($scope.$parent, { $event: ev, value: ev });
+                                $scope.$apply(function () {
+                                    fn($scope.$parent, { $event: ev, value: ev });
+                                });
                             }
                         });
                     });
