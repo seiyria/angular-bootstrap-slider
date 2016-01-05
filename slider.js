@@ -160,11 +160,11 @@ angular.module('ui.bootstrap-slider', [])
                         slideStop: 'onStopSlide'
                     };
                     angular.forEach(sliderEvents, function (sliderEventAttr, sliderEvent) {
-                        var fn = $parse(attrs[sliderEventAttr]);
+                        var fn = $parse(attrs[sliderEventAttr.toLowerCase()]);
                         slider.on(sliderEvent, function (ev) {
                             if ($scope[sliderEventAttr]) {
                                 $scope.$apply(function () {
-                                    fn($scope.$parent, { $event: ev, value: ev });
+                                    fn($scope.$parent, { $event: sliderEvent, value: ev });
                                 });
                             }
                         });
