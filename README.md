@@ -30,3 +30,9 @@ But, if the `tooltip` attribute is in conflict with another angular directive, y
 <!-- it can be used as an element -->
 <slider ng-model="sliders.sliderValue" min="testOptions.min" step="testOptions.step" max="testOptions.max" value="testOptions.value" slider-tooltip="hide"></slider>
 ```
+
+#### Event Calbacks
+```html
+<!-- event callbacks receive the name of the event and the associated value with that event -->
+<slider ng-model="sliders.sliderValue" onSlideStop="myCallback($event,value)"></slider>
+```
