@@ -34,5 +34,5 @@ But, if the `tooltip` attribute is in conflict with another angular directive, y
 #### Event Calbacks
 ```html
 <!-- event callbacks receive the name of the event and the associated value with that event -->
-<slider ng-model="sliders.sliderValue" onSlideStop="myCallback($event,value)"></slider>
+<slider ng-model="sliders.sliderValue" on-slide-stop="myCallback($event,value)"></slider>
 ```
