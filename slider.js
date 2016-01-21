@@ -200,7 +200,7 @@ angular.module('ui.bootstrap-slider', [])
                 }
 
 
-                var watchers = ['min', 'max', 'step', 'range', 'scale'];
+                var watchers = ['min', 'max', 'step', 'range', 'scale', 'ticksLabels'];
                 angular.forEach(watchers, function (prop) {
                     $scope.$watch(prop, function () {
                         slider = initSlider();
