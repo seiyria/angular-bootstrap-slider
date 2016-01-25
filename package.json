@@ -1,6 +1,6 @@
 {
   "name": "angular-bootstrap-slider",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "An angular directive for seiyria-bootstrap-slider",
   "main": "slider.js",
   "dependencies": {
