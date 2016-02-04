@@ -207,8 +207,13 @@ angular.module('ui.bootstrap-slider', [])
                     });
                 });
 
-                $scope.$on('slider:relayout', function() {
-                    slider.relayout();
+                var globalEvents = ['relayout', 'refresh'];
+                angular.forEach(globalEvents, function(event) {
+                    if(angular.isFunction(slider[event])) {
+                        $scope.$on('slider:' + event, function () {
+                            slider[event]();
+                        });
+                    }
                 });
             }
         };
