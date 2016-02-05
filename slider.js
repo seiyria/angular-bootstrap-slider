@@ -207,7 +207,7 @@ angular.module('ui.bootstrap-slider', [])
                     });
                 });
 
-                var globalEvents = ['relayout', 'refresh'];
+                var globalEvents = ['relayout', 'refresh', 'resize'];
                 angular.forEach(globalEvents, function(event) {
                     if(angular.isFunction(slider[event])) {
                         $scope.$on('slider:' + event, function () {
