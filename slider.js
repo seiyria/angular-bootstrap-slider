@@ -1,8 +1,8 @@
 (function(factory) {
     if (typeof define === 'function' && define.amd) {
-        define(['angular', 'bootstrapSlider'], factory);
+        define(['angular', 'bootstrap-slider'], factory);
     } else if (typeof module === 'object' && module.exports) {
-        module.exports = factory(require('angular'), require('bootstrapSlider'));
+        module.exports = factory(require('angular'), require('bootstrap-slider'));
     } else if (window) {
         factory(window.angular, window.Slider);
     }
