@@ -120,9 +120,7 @@ angular.module('ui.bootstrap-slider', [])
                     }
 
                     if (attrs.formatter) {
-                        options.formatter = function(value) {
-                            return $scope.formatter({value: value});
-                        }
+                        options.formatter = $scope.$eval($scope.formatter);
                     }
 
                     // check if slider jQuery plugin exists
