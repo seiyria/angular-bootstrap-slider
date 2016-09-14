@@ -30,6 +30,7 @@ angular.module('ui.bootstrap-slider', [])
                 ticksPositions: '=',
                 scale: '=',
                 focus: '=',
+                rangeHighlights: '=',
                 formatter: '&',
                 onStartSlide: '&',
                 onStopSlide: '&',
@@ -70,6 +71,7 @@ angular.module('ui.bootstrap-slider', [])
                     setOption('ticks_labels', $scope.ticksLabels);
                     setOption('ticks_snap_bounds', $scope.ticksSnapBounds);
                     setOption('ticks_positions', $scope.ticksPositions);
+                    setOption('rangeHighlights', $scope.rangeHighlights);
                     setOption('scale', $scope.scale, 'linear');
                     setOption('focus', $scope.focus);
 
@@ -210,7 +212,7 @@ angular.module('ui.bootstrap-slider', [])
                 }
 
 
-                var watchers = ['min', 'max', 'step', 'range', 'scale', 'ticksLabels', 'ticks'];
+                var watchers = ['min', 'max', 'step', 'range', 'scale', 'ticksLabels', 'ticks', 'rangeHighlights'];
                 angular.forEach(watchers, function (prop) {
                     $scope.$watch(prop, function () {
                         slider = initSlider();
