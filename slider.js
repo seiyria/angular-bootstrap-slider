@@ -64,7 +64,7 @@ angular.module('ui.bootstrap-slider', [])
 
                     function updateColor(value){
                         if(options.setColor != undefined)
-                        $('#'+options.sliderid+" .slider-selection").css({'background-color':options.setColor(value), 'background-image':'none'});
+                        $('#'+options.id+" .slider-selection").css({'background-color':options.setColor(value), 'background-image':'none'});
                     }
                     
                     setOption('id', $scope.sliderid, 'slider-id-' + sliderCount++);
@@ -169,7 +169,6 @@ angular.module('ui.bootstrap-slider', [])
                         });
                     });
                     slider.on('change', function (ev) {
-                        updateColor(ev.newValue);
                         ngModelCtrl.$setViewValue(ev.newValue);
                     });
 
@@ -214,6 +213,7 @@ angular.module('ui.bootstrap-slider', [])
                         }else{
                             slider.setValue(parseFloat(value));
                         }
+                        updateColor(value);
                         slider.relayout();
                     }, true);
 
