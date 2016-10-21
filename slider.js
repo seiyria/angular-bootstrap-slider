@@ -28,6 +28,7 @@ angular.module('ui.bootstrap-slider', [])
                 ticksLabels: '=',
                 ticksSnapBounds: '=',
                 ticksPositions: '=',
+                ticksTooltip: "=",
                 scale: '=',
                 focus: '=',
                 rangeHighlights: '=',
@@ -71,6 +72,7 @@ angular.module('ui.bootstrap-slider', [])
                     setOption('ticks_labels', $scope.ticksLabels);
                     setOption('ticks_snap_bounds', $scope.ticksSnapBounds);
                     setOption('ticks_positions', $scope.ticksPositions);
+                    setOption('ticks_tooltip', $scope.ticksTooltip, false);
                     setOption('rangeHighlights', $scope.rangeHighlights);
                     setOption('scale', $scope.scale, 'linear');
                     setOption('focus', $scope.focus);
@@ -229,6 +231,5 @@ angular.module('ui.bootstrap-slider', [])
                 });
             }
         };
-    }])
-;
+    }]);
 });
