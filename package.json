@@ -3,7 +3,7 @@
   "version": "0.1.26",
   "description": "An angular directive for seiyria-bootstrap-slider",
   "main": "slider.js",
-  "dependencies": {
+  "devDependencies": {
     "http-server": "^0.8.5",
     "jasmine-core": "^2.3.4",
     "karma": "^0.13.15",
@@ -11,7 +11,7 @@
     "karma-jasmine": "^0.3.6",
     "protractor": "^3.0.0"
   },
-  "devDependencies": {},
+  "dependencies": {},
   "scripts": {
     "start": "http-server -a localhost -p 31337 -c-1",
     "test": "npm run protractor",
