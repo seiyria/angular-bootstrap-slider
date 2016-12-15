@@ -10,6 +10,7 @@
 
 angular.module('ui.bootstrap-slider', [])
     .directive('slider', ['$parse', '$timeout', '$rootScope', function ($parse, $timeout, $rootScope) {
+        var sliderCount = 0;
         return {
             restrict: 'AE',
             replace: true,
@@ -32,6 +33,7 @@ angular.module('ui.bootstrap-slider', [])
                 scale: '=',
                 focus: '=',
                 rangeHighlights: '=',
+                setColor: '=',
                 formatter: '&',
                 onStartSlide: '&',
                 onStopSlide: '&',
@@ -39,7 +41,7 @@ angular.module('ui.bootstrap-slider', [])
             },
             link: function ($scope, element, attrs, ngModelCtrl, $compile) {
                 var ngModelDeregisterFn, ngDisabledDeregisterFn;
-
+                
                 var slider = initSlider();
 
                 function initSlider() {
@@ -61,7 +63,12 @@ angular.module('ui.bootstrap-slider', [])
                         return (angular.isString(value) && value.indexOf("[") === 0) ? angular.fromJson(value) : value;
                     }
 
-                    setOption('id', $scope.sliderid);
+                    function updateColor(value){
+                        if(options.setColor != undefined)
+                        $('#'+options.id+" .slider-selection").css({'background-color':options.setColor(value), 'background-image':'none'});
+                    }
+                    
+                    setOption('id', $scope.sliderid, 'slider-id-' + sliderCount++);
                     setOption('orientation', attrs.orientation, 'horizontal');
                     setOption('selection', attrs.selection, 'before');
                     setOption('handle', attrs.handle, 'round');
@@ -76,7 +83,8 @@ angular.module('ui.bootstrap-slider', [])
                     setOption('rangeHighlights', $scope.rangeHighlights);
                     setOption('scale', $scope.scale, 'linear');
                     setOption('focus', $scope.focus);
-
+                    setOption('setColor', $scope.setColor);
+                    
                     setFloatOption('min', $scope.min, 0);
                     setFloatOption('max', $scope.max, 10);
                     setFloatOption('step', $scope.step, 1);
@@ -207,6 +215,7 @@ angular.module('ui.bootstrap-slider', [])
                         }else{
                             slider.setValue(parseFloat(value));
                         }
+                        updateColor(value);
                         slider.relayout();
                     }, true);
 
