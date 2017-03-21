@@ -74,7 +74,7 @@ angular.module('ui.bootstrap-slider', [])
                     setOption('ticks_positions', $scope.ticksPositions);
                     setOption('ticks_tooltip', $scope.ticksTooltip, false);
                     setOption('rangeHighlights', $scope.rangeHighlights);
-                    setOption('scale', $scope.scale, 'linear');
+                    setOption('scale', $scope.scale || attrs.scale, 'linear');
                     setOption('focus', $scope.focus);
 
                     setFloatOption('min', $scope.min, 0);
