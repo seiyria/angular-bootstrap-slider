@@ -115,7 +115,7 @@ angular.module('ui.bootstrap-slider', [])
                             }
                         }
                         else {
-                            options.value = [options.min, options.max]; // This is needed, because of value defined at $.fn.slider.defaults - default value 5 prevents creating range slider
+                            options.value = [options.min, options.max]; // This is needed, because of value defined at $.fn.bootstrapSlider.defaults - default value 5 prevents creating range slider
                         }
                         $scope.ngModel = options.value; // needed, otherwise turns value into [null, ##]
                     }
@@ -130,12 +130,12 @@ angular.module('ui.bootstrap-slider', [])
                     }
 
                     // check if slider jQuery plugin exists
-                    if (typeof window.$ !== 'undefined' && typeof $.fn === 'object' && $.fn.slider) {
+                    if (typeof window.$ !== 'undefined' && typeof $.fn === 'object' && $.fn.bootstrapSlider) {
                         // adding methods to jQuery slider plugin prototype
-                        $.fn.slider.constructor.prototype.disable = function () {
+                        $.fn.bootstrapSlider.constructor.prototype.disable = function () {
                             this.picker.off();
                         };
-                        $.fn.slider.constructor.prototype.enable = function () {
+                        $.fn.bootstrapSlider.constructor.prototype.enable = function () {
                             this.picker.on();
                         };
                     }
