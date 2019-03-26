@@ -129,17 +129,6 @@ angular.module('ui.bootstrap-slider', [])
                         }
                     }
 
-                    // check if slider jQuery plugin exists
-                    if (typeof window.$ !== 'undefined' && typeof $.fn === 'object' && $.fn.slider) {
-                        // adding methods to jQuery slider plugin prototype
-                        $.fn.slider.constructor.prototype.disable = function () {
-                            this.picker.off();
-                        };
-                        $.fn.slider.constructor.prototype.enable = function () {
-                            this.picker.on();
-                        };
-                    }
-
                     // destroy previous slider to reset all options
                     if (element[0].__slider)
                         element[0].__slider.destroy();
