@@ -198,6 +198,15 @@
     <span slider ng-model="model.tenth"
           updateevent="[&quot;slideStop&quot;, &quot;slide&quot;, &quot;slideStart&quot;]"></span>
     Model: {{model.tenth}}
+
+    <br><br>
+    Lock to ticks
+    <span slider
+          ng-model="model.eleventh"
+          ticks="[3, 5, 7]"
+          lock_to_ticks="true"></span>
+    Model: {{model.eleventh}}
+
 </div>
 
 

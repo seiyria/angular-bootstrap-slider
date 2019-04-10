@@ -35,7 +35,8 @@ angular.module('ui.bootstrap-slider', [])
                 formatter: '&',
                 onStartSlide: '&',
                 onStopSlide: '&',
-                onSlide: '&'
+                onSlide: '&',
+                lockToTicks: '='
             },
             link: function ($scope, element, attrs, ngModelCtrl, $compile) {
                 var ngModelDeregisterFn, ngDisabledDeregisterFn;
@@ -76,6 +77,7 @@ angular.module('ui.bootstrap-slider', [])
                     setOption('rangeHighlights', $scope.rangeHighlights);
                     setOption('scale', $scope.scale, 'linear');
                     setOption('focus', $scope.focus);
+                    setOption('lock_to_ticks', $scope.lockToTicks, false);
 
                     setFloatOption('min', $scope.min, 0);
                     setFloatOption('max', $scope.max, 10);
