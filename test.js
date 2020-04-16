@@ -30,7 +30,8 @@ angular.module('angular-bootstrap-slider-test', ['ui.bootstrap-slider'])
             seventh: 0,
             eighth: 0,
             ninth: 0,
-            tenth: 0
+            tenth: 0,
+            eleventh: 3
         };
 
         $scope.value = {
@@ -43,7 +44,8 @@ angular.module('angular-bootstrap-slider-test', ['ui.bootstrap-slider'])
             seventh: 0,
             eighth: 0,
             ninth: 0,
-            tenth: 0
+            tenth: 0,
+            eleventh: 3
         };
 
         $scope.prefix = 'Current value: ';
